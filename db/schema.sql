@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS categories (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(255),
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(255),
+    email VARCHAR(255),
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS transactions (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    amount DECIMAL NOT NULL,
+    date DATE NOT NULL,
+    raw_name VARCHAR(255) NOT NULL,
+    clean_name VARCHAR(100) NOT NULL,
+    category_id INT REFERENCES categories(id),
+    user_id INT REFERENCES users(id),
+    created_at TIMESTAMP DEFAULT NOW()
+);
