@@ -38,3 +38,60 @@ export const uploadTransactions = async (transactions: Transaction[]) => {
 		console.error('[uploadTransaction]', error);
 	}
 };
+
+export const getTransactions = async (userId: number, categoryID?: number) => {
+	try {
+		return await sql.query(
+			'SELECT * FROM transactions WHERE user_id = $1 AND (category_id = $2 OR $2 IS NULL)',
+			[userId, categoryID],
+		);
+	} catch (error) {
+		console.error('[getTransactions]', error);
+	}
+};
+
+export const getTransaction = async (transactionId: number) => {
+	try {
+		return await sql`
+			SELECT * FROM transactions
+			WHERE id = ${transactionId};
+		`;
+	} catch (error) {
+		console.error('[getTransaction]', error);
+	}
+};
+
+export const updateTransaction = async (
+	transactionId: number,
+	newValues: Transaction,
+) => {
+	try {
+		await sql`
+			UPDATE transactions
+			SET (
+				amount,
+				date,
+				clean_name,
+				category_id
+			) = (
+				${newValues.amount},
+				${newValues.date},
+				${newValues.cleanName},
+				${newValues.categoryID}
+			) WHERE id = ${transactionId};
+		`;
+	} catch (error) {
+		console.error('[updateTransaction]', error);
+	}
+};
+
+export const deleteTransaction = async (transactionId: number) => {
+	try {
+		await sql`
+			DELETE FROM transactions
+			WHERE id = ${transactionId};
+		`;
+	} catch (error) {
+		console.error('[deleteTransaction]', error);
+	}
+};
