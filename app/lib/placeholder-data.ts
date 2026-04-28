@@ -1,4 +1,4 @@
-import { Transaction } from './interfaces';
+import { CATEGORY, Transaction } from './interfaces';
 
 const transactions: Transaction[] = [
 	{
@@ -6,7 +6,7 @@ const transactions: Transaction[] = [
 		date: new Date(2026, 3, 24).toISOString().split('T')[0],
 		rawName: 'SEN',
 		cleanName: 'Sen Sushi',
-		categoryID: 1,
+		category: CATEGORY.FOODS_DRINKS,
 		userID: 1,
 	},
 	{
@@ -14,7 +14,7 @@ const transactions: Transaction[] = [
 		date: new Date(2026, 3, 24).toISOString().split('T')[0],
 		rawName: 'store 1234',
 		cleanName: 'Formosa Aroma',
-		categoryID: 2,
+		category: CATEGORY.FOODS_DRINKS,
 		userID: 1,
 	},
 ];

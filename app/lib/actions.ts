@@ -1,7 +1,7 @@
 // app/actions.ts
 'use server';
 import { neon } from '@neondatabase/serverless';
-import { Transaction } from './interfaces';
+import { CATEGORY, Transaction } from './interfaces';
 
 const DATABASE_URL = process.env.DATABASE_URL || '';
 const sql = neon(DATABASE_URL);
@@ -14,20 +14,20 @@ export async function getData() {
 export const uploadTransactions = async (transactions: Transaction[]) => {
 	try {
 		const promises = transactions.map((row) => {
-			sql`
+			return sql`
 				INSERT INTO transactions (
 				amount,
 				date,
 				raw_name,
 				clean_name,
-				category_id,
+				category,
 				user_id
 				) VALUES (
 					${row.amount},
 					${row.date},
 					${row.rawName},
 					${row.cleanName},
-					${row.categoryID},	 
+					${row.category},
 					${row.userID}
 				);
 			`;
@@ -39,11 +39,11 @@ export const uploadTransactions = async (transactions: Transaction[]) => {
 	}
 };
 
-export const getTransactions = async (userId: number, categoryID?: number) => {
+export const getTransactions = async (userId: number, category: CATEGORY) => {
 	try {
 		return await sql.query(
-			'SELECT * FROM transactions WHERE user_id = $1 AND (category_id = $2 OR $2 IS NULL)',
-			[userId, categoryID],
+			'SELECT * FROM transactions WHERE user_id = $1 AND (category = $2 OR $2 IS NULL)',
+			[userId, category],
 		);
 	} catch (error) {
 		console.error('[getTransactions]', error);
@@ -72,12 +72,12 @@ export const updateTransaction = async (
 				amount,
 				date,
 				clean_name,
-				category_id
+				category
 			) = (
 				${newValues.amount},
 				${newValues.date},
 				${newValues.cleanName},
-				${newValues.categoryID}
+				${newValues.category}
 			) WHERE id = ${transactionId};
 		`;
 	} catch (error) {
