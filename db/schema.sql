@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS transactions (
     raw_name VARCHAR(255) NOT NULL,
     clean_name VARCHAR(100) NOT NULL,
     category VARCHAR(255) NOT NULL,
+    notes TEXT,
     user_id INT REFERENCES users(id),
     created_at TIMESTAMP DEFAULT NOW()
 );

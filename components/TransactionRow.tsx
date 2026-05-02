@@ -1,32 +1,48 @@
 'use client';
 
 import { CATEGORY, Transaction } from '@/app/lib/interfaces';
-import React from 'react';
-import { Button } from './ui/button';
-import { DollarSignIcon, Edit2Icon, Trash2Icon } from 'lucide-react';
-import { Field, FieldDescription, FieldGroup, FieldLabel } from './ui/field';
-import { Input } from './ui/input';
 import {
 	Select,
 	SelectContent,
 	SelectGroup,
 	SelectItem,
-	SelectLabel,
 	SelectTrigger,
 	SelectValue,
 } from './ui/select';
 
 const TransactionRow = (transaction: Transaction) => {
-	const [isDisabled, setIsDisabled] = React.useState(true);
-	const [amount, setAmount] = React.useState(transaction.amount);
-
 	return (
-		<Button variant='ghost' className='w-fit'>
-			<p>{new Date(transaction.date).toDateString()}</p>
-			<p>{transaction.cleanName}</p>
-			<p>{transaction.amount}</p>
-			<p>{transaction.category}</p>
-		</Button>
+		<div className='w-full h-fit flex justify-between'>
+			<div className='flex flex-col'>
+				<p className='text-left text-lg font-semibold'>
+					{transaction.cleanName}
+				</p>
+				<Select>
+					<SelectTrigger className='border-0 focus-visible:ring-0 p-0 items-start'>
+						<SelectValue
+							placeholder={transaction.category}
+							className='text-gray-400'
+						/>
+					</SelectTrigger>
+					<SelectContent position='popper'>
+						<SelectGroup>
+							{Object.values(CATEGORY).map((value) => {
+								return (
+									<SelectItem
+										key={value}
+										value={value}
+										className='font-nunito text-sm'
+									>
+										{value}
+									</SelectItem>
+								);
+							})}
+						</SelectGroup>
+					</SelectContent>
+				</Select>
+			</div>
+			<p className='font-bold text-lg'>${transaction.amount.toFixed(2)}</p>
+		</div>
 	);
 };
 

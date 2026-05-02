@@ -4,6 +4,7 @@ export interface Transaction {
 	rawName: string;
 	cleanName: string;
 	category: CATEGORY;
+	notes?: string;
 	userID: number;
 }
 

@@ -7,6 +7,7 @@ const transactions: Transaction[] = [
 		rawName: 'SEN',
 		cleanName: 'Sen Sushi',
 		category: CATEGORY.FOODS_DRINKS,
+		notes: 'Took the princess out',
 		userID: 1,
 	},
 	{
