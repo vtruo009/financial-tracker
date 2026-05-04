@@ -1,4 +1,4 @@
-import { CATEGORY } from '@/app/lib/interfaces';
+import { CATEGORY } from '@/lib/interfaces';
 import {
 	BalloonIcon,
 	HamburgerIcon,

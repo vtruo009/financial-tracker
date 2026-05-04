@@ -9,6 +9,7 @@ const transactions: Transaction[] = [
 		category: CATEGORY.FOODS_DRINKS,
 		notes: 'Took the princess out',
 		userID: 1,
+		id: '0',
 	},
 	{
 		amount: 8.13,
@@ -17,6 +18,7 @@ const transactions: Transaction[] = [
 		cleanName: 'Formosa Aroma',
 		category: CATEGORY.FOODS_DRINKS,
 		userID: 1,
+		id: '1',
 	},
 ];
 

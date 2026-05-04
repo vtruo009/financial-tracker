@@ -1,5 +1,5 @@
-import { Transaction } from '@/app/lib/interfaces';
-import React from 'react';
+import { Transaction } from '@/lib/interfaces';
+
 import TransactionRow from './TransactionRow';
 
 interface DateSectionProps {
@@ -7,7 +7,10 @@ interface DateSectionProps {
 	transactions: Transaction[];
 }
 
-function DateSection({ transactionDate, transactions }: DateSectionProps) {
+function TransactionSection({
+	transactionDate,
+	transactions,
+}: DateSectionProps) {
 	return (
 		<div>
 			<p className='text-gray-500 border-b-2 border-gray-400'>
@@ -20,4 +23,4 @@ function DateSection({ transactionDate, transactions }: DateSectionProps) {
 	);
 }
 
-export default DateSection;
+export default TransactionSection;

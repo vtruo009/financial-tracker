@@ -1,6 +1,6 @@
 'use client';
 
-import { CATEGORY, Transaction } from '@/app/lib/interfaces';
+import { CATEGORY, Transaction } from '@/lib/interfaces';
 import {
 	Select,
 	SelectContent,

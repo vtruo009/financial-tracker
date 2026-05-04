@@ -1,6 +1,6 @@
-import { getTransactions } from './lib/actions';
-import { Transaction } from './lib/interfaces';
-import DateSection from '@/components/DateSection';
+import { getTransactions } from '../lib/actions';
+import { Transaction } from '../lib/interfaces';
+import TransactionSection from '@/components/TransactionSection';
 
 export default async function Home() {
 	const allTransactions = await getTransactions();
@@ -27,16 +27,19 @@ export default async function Home() {
 	return (
 		<div className='flex flex-col flex-1 items-center justify-center bg-zinc-50 font-nunito dark:bg-black'>
 			<main className='flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start'>
-				{groupedTransactions &&
+				{groupedTransactions ? (
 					Object.entries(groupedTransactions).map(
 						(entry: [string, Transaction[]]) => (
-							<DateSection
+							<TransactionSection
 								key={entry[0]}
 								transactionDate={entry[0]}
 								transactions={entry[1]}
 							/>
 						),
-					)}
+					)
+				) : (
+					<div className='text-2xl'>There are no transactions yet</div>
+				)}
 			</main>
 		</div>
 	);

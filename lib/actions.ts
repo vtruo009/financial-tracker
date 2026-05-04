@@ -1,4 +1,3 @@
-// app/actions.ts
 'use server';
 import { neon } from '@neondatabase/serverless';
 import { CATEGORY, Transaction } from './interfaces';
