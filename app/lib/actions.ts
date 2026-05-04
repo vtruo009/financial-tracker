@@ -39,10 +39,13 @@ export const uploadTransactions = async (transactions: Transaction[]) => {
 	}
 };
 
-export const getTransactions = async (userId: number, category: CATEGORY) => {
+export const getTransactions = async (
+	userId: number = 1,
+	category?: CATEGORY,
+) => {
 	try {
 		return await sql.query(
-			'SELECT * FROM transactions WHERE user_id = $1 AND (category = $2 OR $2 IS NULL)',
+			'SELECT * FROM transactions WHERE user_id = $1 AND (category = $2 OR $2 IS NULL) ORDER BY date DESC',
 			[userId, category],
 		);
 	} catch (error) {
