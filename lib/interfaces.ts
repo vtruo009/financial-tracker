@@ -5,7 +5,7 @@ export interface Transaction {
 	rawName: string;
 	cleanName: string;
 	category: CATEGORY;
-	notes?: string;
+	notes?: string | null;
 	userID: number;
 }
 
@@ -16,4 +16,5 @@ export enum CATEGORY {
 	TRAVEL = 'Travel',
 	BILL = 'Bill',
 	NECESSITY = 'Necessity',
+	MISC = 'Miscelaneous',
 }

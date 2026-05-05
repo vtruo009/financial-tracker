@@ -15,19 +15,23 @@ export const uploadTransactions = async (transactions: Transaction[]) => {
 		const promises = transactions.map((row) => {
 			return sql`
 				INSERT INTO transactions (
-				amount,
-				date,
-				raw_name,
-				clean_name,
-				category,
-				user_id
+					id,
+					amount,
+					date,
+					raw_name,
+					clean_name,
+					category,
+					user_id,
+					notes
 				) VALUES (
+				 	${row.id},
 					${row.amount},
 					${row.date},
 					${row.rawName},
 					${row.cleanName},
 					${row.category},
-					${row.userID}
+					${row.userID},
+					${row.notes}
 				);
 			`;
 		});
