@@ -1,6 +1,7 @@
 'use server';
 import { neon } from '@neondatabase/serverless';
 import { CATEGORY, Transaction } from './interfaces';
+import { parseCSV } from './utils';
 
 const DATABASE_URL = process.env.DATABASE_URL || '';
 const sql = neon(DATABASE_URL);
@@ -100,4 +101,13 @@ export const deleteTransaction = async (transactionId: number) => {
 	} catch (error) {
 		console.error('[deleteTransaction]', error);
 	}
+};
+
+export const handleUpload = async (formData: FormData) => {
+	'use server';
+	const file = formData.get('file');
+	if (!(file instanceof File)) throw new Error('No file uploaded');
+	const fileContent: string = await file.text();
+	const data: Transaction[] = parseCSV(fileContent);
+	await uploadTransactions(data);
 };

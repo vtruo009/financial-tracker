@@ -1,5 +1,4 @@
 import { Transaction } from '@/lib/interfaces';
-
 import TransactionRow from './TransactionRow';
 
 interface DateSectionProps {

@@ -1,7 +1,7 @@
-import { parseCSV } from '@/lib/utils';
 import { getTransactions } from '../lib/actions';
 import { Transaction } from '../lib/interfaces';
 import TransactionSection from '@/components/TransactionSection';
+import FileUpload from '@/components/FileUpload';
 
 export default async function Home() {
 	// const allTransactions = await getTransactions();
@@ -41,6 +41,7 @@ export default async function Home() {
 				) : (
 					<div className='text-2xl'>There are no transactions yet</div>
 				)} */}
+				<FileUpload />
 			</main>
 		</div>
 	);
