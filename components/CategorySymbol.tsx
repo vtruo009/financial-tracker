@@ -2,6 +2,7 @@ import { CATEGORY } from '@/lib/interfaces';
 import {
 	BalloonIcon,
 	HamburgerIcon,
+	LucideProps,
 	PlaneIcon,
 	ReceiptIcon,
 	ShoppingBagIcon,
@@ -18,14 +19,14 @@ const categoryColors: Record<string, string> = {
 	'Materialistic Desires': 'oklch(89% 0.10531 178.236)',
 };
 
-const getCategoryIcon = (category: string, className: string = '') => {
+const getCategoryIcon = (category: string, otherProps?: LucideProps) => {
 	const icons: Record<string, JSX.Element> = {
-		'Food & Drinks': <HamburgerIcon className={className} />,
-		Bill: <ReceiptIcon className={className} />,
-		Travel: <PlaneIcon className={className} />,
-		Hobby: <BalloonIcon className={className} />,
-		Necessity: <WrenchIcon className={className} />,
-		'Materialistic Desires': <ShoppingBagIcon className={className} />,
+		'Food & Drinks': <HamburgerIcon {...otherProps} />,
+		Bill: <ReceiptIcon {...otherProps} />,
+		Travel: <PlaneIcon {...otherProps} />,
+		Hobby: <BalloonIcon {...otherProps} />,
+		Necessity: <WrenchIcon {...otherProps} />,
+		'Materialistic Desires': <ShoppingBagIcon {...otherProps} />,
 	};
 
 	return icons[category];
@@ -34,10 +35,10 @@ const getCategoryIcon = (category: string, className: string = '') => {
 const CategorySymbol = ({ category }: { category: CATEGORY }) => {
 	return (
 		<div
-			className='rounded-full p-2'
+			className='w-8 h-8 rounded-full flex items-center justify-center'
 			style={{ backgroundColor: categoryColors[category] }}
 		>
-			{getCategoryIcon(category)}
+			{getCategoryIcon(category, { size: 20 })}
 		</div>
 	);
 };

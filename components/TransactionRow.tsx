@@ -9,40 +9,49 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from './ui/select';
+import CategorySymbol from './CategorySymbol';
+import { TableCell, TableRow } from './ui/table';
 
-const TransactionRow = (transaction: Transaction) => {
+const TransactionRow = ({ category, cleanName, amount }: Transaction) => {
 	return (
-		<div className='w-full h-fit flex justify-between'>
-			<div className='flex flex-col'>
-				<p className='text-left text-lg font-semibold'>
-					{transaction.cleanName}
-				</p>
-				<Select>
-					<SelectTrigger className='border-0 focus-visible:ring-0 p-0 items-start'>
-						<SelectValue
-							placeholder={transaction.category}
-							className='text-gray-400'
-						/>
-					</SelectTrigger>
-					<SelectContent position='popper'>
-						<SelectGroup>
-							{Object.values(CATEGORY).map((value) => {
-								return (
-									<SelectItem
-										key={value}
-										value={value}
-										className='font-nunito text-sm'
-									>
-										{value}
-									</SelectItem>
-								);
-							})}
-						</SelectGroup>
-					</SelectContent>
-				</Select>
-			</div>
-			<p className='font-bold text-lg'>${transaction.amount.toFixed(2)}</p>
-		</div>
+		<TableRow className='border-0'>
+			<TableCell>
+				<CategorySymbol category={category} />
+			</TableCell>
+
+			<TableCell>
+				<div className='flex flex-col flex-1'>
+					<p className='text-left text-lg font-semibold'>{cleanName}</p>
+					<Select>
+						<SelectTrigger
+							size='sm'
+							className='border-0 focus-visible:ring-0 p-0 items-start'
+						>
+							<SelectValue placeholder={category} className='text-gray-400' />
+						</SelectTrigger>
+						<SelectContent position='popper'>
+							<SelectGroup>
+								{Object.values(CATEGORY).map((value) => {
+									return (
+										<SelectItem
+											key={value}
+											value={value}
+											className='font-nunito text-sm'
+										>
+											{value}
+										</SelectItem>
+									);
+								})}
+							</SelectGroup>
+						</SelectContent>
+					</Select>
+				</div>
+			</TableCell>
+
+			<TableCell className='content-start'>
+				<p className='font-bold text-lg text-right'>${amount.toFixed(2)}</p>
+			</TableCell>
+		</TableRow>
 	);
 };
 

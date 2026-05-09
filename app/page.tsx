@@ -1,47 +1,59 @@
 import { getTransactions } from '../lib/actions';
 import { Transaction } from '../lib/interfaces';
-import TransactionSection from '@/components/TransactionSection';
 import FileUpload from '@/components/FileUpload';
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
+import React from 'react';
+import TransactionRow from '@/components/TransactionRow';
 
 export default async function Home() {
-	// const allTransactions = await getTransactions();
-	// const groupedTransactions = allTransactions?.reduce(
-	// 	(acc, transaction) => {
-	// 		const date = new Date(transaction.date).toDateString();
-	// 		if (!acc[date]) acc[date] = [];
-	// 		const localTransaction: Transaction = {
-	// 			id: transaction.id,
-	// 			amount: parseFloat(transaction.amount),
-	// 			date: transaction.date,
-	// 			rawName: transaction.raw_name,
-	// 			cleanName: transaction.clean_name,
-	// 			category: transaction.category,
-	// 			userID: parseInt(transaction.user_id),
-	// 			notes: transaction.notes,
-	// 		};
-	// 		acc[date].push(localTransaction);
-	// 		return acc;
-	// 	},
-	// 	{} as Record<string, Transaction[]>,
-	// );
+	const allTransactions = await getTransactions();
+	const groupedTransactions = allTransactions?.reduce(
+		(acc, transaction) => {
+			const date = new Date(transaction.date).toDateString();
+			if (!acc[date]) acc[date] = [];
+			const localTransaction: Transaction = {
+				id: transaction.id,
+				amount: parseFloat(transaction.amount),
+				date: transaction.date,
+				rawName: transaction.raw_name,
+				cleanName: transaction.clean_name,
+				category: transaction.category,
+				userID: parseInt(transaction.user_id),
+				notes: transaction.notes,
+			};
+			acc[date].push(localTransaction);
+			return acc;
+		},
+		{} as Record<string, Transaction[]>,
+	);
 
 	return (
 		<div className='flex flex-col flex-1 items-center justify-center bg-zinc-50 font-nunito dark:bg-black'>
 			<main className='flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start'>
-				{/* {groupedTransactions ? (
-					Object.entries(groupedTransactions).map(
-						(entry: [string, Transaction[]]) => (
-							<TransactionSection
-								key={entry[0]}
-								transactionDate={entry[0]}
-								transactions={entry[1]}
-							/>
-						),
-					)
-				) : (
-					<div className='text-2xl'>There are no transactions yet</div>
-				)} */}
 				<FileUpload />
+				<h2>Transactions</h2>
+				<div className='border border-gray-200 rounded-sm overflow-hidden'>
+					<Table>
+						<TableBody>
+							{groupedTransactions &&
+								Object.entries(groupedTransactions).map(
+									(entry: [string, Transaction[]]) => (
+										<React.Fragment key={entry[0]}>
+											<TableRow
+												key={entry[0]}
+												className='h-10 hover:bg-transparent'
+											>
+												<TableCell colSpan={3}>{entry[0]}</TableCell>
+											</TableRow>
+											{entry[1].map((transaction) => (
+												<TransactionRow key={transaction.id} {...transaction} />
+											))}
+										</React.Fragment>
+									),
+								)}
+						</TableBody>
+					</Table>
+				</div>
 			</main>
 		</div>
 	);
