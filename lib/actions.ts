@@ -57,7 +57,7 @@ export const getTransactions = async (
 	}
 };
 
-export const getTransaction = async (transactionId: number) => {
+export const getTransaction = async (transactionId: string) => {
 	try {
 		return await sql`
 			SELECT * FROM transactions
@@ -69,22 +69,19 @@ export const getTransaction = async (transactionId: number) => {
 };
 
 export const updateTransaction = async (
-	transactionId: number,
-	newValues: Transaction,
+	transactionId: string,
+	category: CATEGORY,
+	notes: string | null,
 ) => {
 	try {
 		await sql`
 			UPDATE transactions
 			SET (
-				amount,
-				date,
-				clean_name,
-				category
+				category,
+				notes
 			) = (
-				${newValues.amount},
-				${newValues.date},
-				${newValues.cleanName},
-				${newValues.category}
+				${category},
+				${notes}
 			) WHERE id = ${transactionId};
 		`;
 	} catch (error) {
@@ -92,7 +89,7 @@ export const updateTransaction = async (
 	}
 };
 
-export const deleteTransaction = async (transactionId: number) => {
+export const deleteTransaction = async (transactionId: string) => {
 	try {
 		await sql`
 			DELETE FROM transactions
