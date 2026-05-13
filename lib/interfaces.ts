@@ -5,8 +5,19 @@ export interface Transaction {
 	rawName: string;
 	cleanName: string;
 	category: CATEGORY;
-	notes?: string | null;
 	userID: number;
+	accountID: number;
+	notes?: string | null;
+}
+
+export interface Account {
+	name: string;
+	type: ACCOUNT_TYPE;
+	userID: number;
+}
+
+export interface TransactionWithAccount extends Transaction {
+	account: Account;
 }
 
 export enum CATEGORY {
@@ -17,4 +28,10 @@ export enum CATEGORY {
 	BILL = 'Bill',
 	NECESSITY = 'Necessity',
 	MISC = 'Miscelaneous',
+}
+
+export enum ACCOUNT_TYPE {
+	CHECKING = 'checking',
+	SAVINGS = 'savings',
+	CREDIT = 'credit',
 }

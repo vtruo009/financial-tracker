@@ -4,6 +4,7 @@ import FileUpload from '@/components/FileUpload';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import React from 'react';
 import TransactionRow from '@/components/TransactionRow';
+import AddAccount from '@/components/AddAccount';
 
 export default async function Home() {
 	const allTransactions = await getTransactions();
@@ -19,6 +20,7 @@ export default async function Home() {
 				cleanName: transaction.clean_name,
 				category: transaction.category,
 				userID: parseInt(transaction.user_id),
+				accountID: parseInt(transaction.account_id),
 				notes: transaction.notes,
 			};
 			acc[date].push(localTransaction);
@@ -31,6 +33,7 @@ export default async function Home() {
 		<div className='flex flex-col flex-1 items-center justify-center bg-zinc-50 font-nunito dark:bg-black'>
 			<main className='flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start'>
 				<FileUpload />
+				<AddAccount />
 				<h2>Transactions</h2>
 				<div className='border border-gray-200 rounded-sm overflow-hidden'>
 					<Table>

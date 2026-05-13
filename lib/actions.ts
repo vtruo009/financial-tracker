@@ -1,6 +1,6 @@
 'use server';
 import { neon } from '@neondatabase/serverless';
-import { CATEGORY, Transaction } from './interfaces';
+import { Account, CATEGORY, Transaction } from './interfaces';
 import { parseCSV } from './utils';
 
 const DATABASE_URL = process.env.DATABASE_URL || '';
@@ -49,7 +49,7 @@ export const getTransactions = async (
 ) => {
 	try {
 		return await sql.query(
-			'SELECT * FROM transactions WHERE user_id = $1 AND (category = $2 OR $2 IS NULL) ORDER BY date DESC',
+			'SELECT * FROM transactions JOIN accounts ON transactions.account_id = accounts.id WHERE transactions.user_id = $1 AND (category = $2 OR $2 IS NULL) ORDER BY date DESC',
 			[userId, category],
 		);
 	} catch (error) {
@@ -107,4 +107,27 @@ export const handleUpload = async (formData: FormData) => {
 	const fileContent: string = await file.text();
 	const data: Transaction[] = parseCSV(fileContent);
 	await uploadTransactions(data);
+};
+
+/********************************
+  Accounts
+ ********************************/
+export const addAccount = async (account: Account) => {
+	try {
+		const data = await sql`
+			INSERT INTO accounts (
+				name,
+				type,
+				user_id
+			) VALUES (
+				${account.name},
+				${account.type},
+				${account.userID} 
+			)
+		`;
+
+		console.log(data);
+	} catch (error) {
+		console.error('[addAccount', error);
+	}
 };
