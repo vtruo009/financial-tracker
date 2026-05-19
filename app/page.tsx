@@ -1,5 +1,10 @@
-import { getTransactions } from '../lib/actions';
-import { Transaction } from '../lib/interfaces';
+import { getAllAccounts, getTransactions } from '../lib/actions';
+import {
+	Account,
+	ACCOUNT_TYPE,
+	Transaction,
+	TransactionWithAccount,
+} from '../lib/interfaces';
 import FileUpload from '@/components/FileUpload';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import React from 'react';
@@ -12,8 +17,9 @@ export default async function Home() {
 		(acc, transaction) => {
 			const date = new Date(transaction.date).toDateString();
 			if (!acc[date]) acc[date] = [];
-			const localTransaction: Transaction = {
+			const localTransaction: TransactionWithAccount = {
 				id: transaction.id,
+				refNum: transaction.ref_num,
 				amount: parseFloat(transaction.amount),
 				date: transaction.date,
 				rawName: transaction.raw_name,
@@ -22,17 +28,24 @@ export default async function Home() {
 				userID: parseInt(transaction.user_id),
 				accountID: parseInt(transaction.account_id),
 				notes: transaction.notes,
+				account: {
+					id: parseInt(transaction.account_id),
+					name: transaction.account_name,
+					type: transaction.account_type as ACCOUNT_TYPE,
+					userID: parseInt(transaction.user_id),
+				},
 			};
 			acc[date].push(localTransaction);
 			return acc;
 		},
-		{} as Record<string, Transaction[]>,
+		{} as Record<string, TransactionWithAccount[]>,
 	);
+	const accounts = (await getAllAccounts()) as Account[];
 
 	return (
 		<div className='flex flex-col flex-1 items-center justify-center bg-zinc-50 font-nunito dark:bg-black'>
 			<main className='flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start'>
-				<FileUpload />
+				<FileUpload accounts={accounts} />
 				<AddAccount />
 				<h2>Transactions</h2>
 				<div className='border border-gray-200 rounded-sm overflow-hidden'>

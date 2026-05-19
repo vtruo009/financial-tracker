@@ -1,7 +1,7 @@
 'use server';
+
 import { neon } from '@neondatabase/serverless';
-import { Account, CATEGORY, Transaction } from './interfaces';
-import { parseCSV } from './utils';
+import { Account, CATEGORY, TransactionWithAccountInput } from './interfaces';
 
 const DATABASE_URL = process.env.DATABASE_URL || '';
 const sql = neon(DATABASE_URL);
@@ -11,28 +11,33 @@ export async function getData() {
 	return data;
 }
 
-export const uploadTransactions = async (transactions: Transaction[]) => {
+/******************************** TRANSACTIONS ********************************/
+export const uploadTransactions = async (
+	transactions: TransactionWithAccountInput[],
+) => {
 	try {
 		const promises = transactions.map((row) => {
 			return sql`
 				INSERT INTO transactions (
-					id,
 					amount,
 					date,
 					raw_name,
 					clean_name,
 					category,
 					user_id,
-					notes
+					notes,
+					account_id,
+					ref_num
 				) VALUES (
-				 	${row.id},
 					${row.amount},
 					${row.date},
 					${row.rawName},
 					${row.cleanName},
 					${row.category},
 					${row.userID},
-					${row.notes}
+					${row.notes},
+					${row.accountID},
+					${row.refNum}
 				);
 			`;
 		});
@@ -49,7 +54,7 @@ export const getTransactions = async (
 ) => {
 	try {
 		return await sql.query(
-			'SELECT * FROM transactions JOIN accounts ON transactions.account_id = accounts.id WHERE transactions.user_id = $1 AND (category = $2 OR $2 IS NULL) ORDER BY date DESC',
+			'SELECT transactions.*, accounts.name AS account_name, accounts.type AS account_type FROM transactions JOIN accounts ON transactions.account_id = accounts.id WHERE transactions.user_id = $1 AND (category = $2 OR $2 IS NULL) ORDER BY date DESC',
 			[userId, category],
 		);
 	} catch (error) {
@@ -100,18 +105,7 @@ export const deleteTransaction = async (transactionId: string) => {
 	}
 };
 
-export const handleUpload = async (formData: FormData) => {
-	'use server';
-	const file = formData.get('file');
-	if (!(file instanceof File)) throw new Error('No file uploaded');
-	const fileContent: string = await file.text();
-	const data: Transaction[] = parseCSV(fileContent);
-	await uploadTransactions(data);
-};
-
-/********************************
-  Accounts
- ********************************/
+/******************************** ACCOUNTS ********************************/
 export const addAccount = async (account: Account) => {
 	try {
 		const data = await sql`
@@ -129,5 +123,16 @@ export const addAccount = async (account: Account) => {
 		console.log(data);
 	} catch (error) {
 		console.error('[addAccount', error);
+	}
+};
+
+export const getAllAccounts = async (userId: number = 1) => {
+	try {
+		return await sql`
+			SELECT * FROM accounts
+			WHERE user_id = ${userId}
+		`;
+	} catch (error) {
+		console.error('[getAllAccounts]', error);
 	}
 };

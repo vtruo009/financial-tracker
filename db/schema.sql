@@ -13,14 +13,15 @@ CREATE TABLE IF NOT EXISTS accounts (
 )
 
 CREATE TABLE IF NOT EXISTS transactions (
-    id VARCHAR(255) PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     amount DECIMAL NOT NULL,
     date DATE NOT NULL,
     raw_name VARCHAR(255) NOT NULL,
-    clean_name VARCHAR(100) NOT NULL,
+    clean_name VARCHAR(255) NOT NULL,
     category VARCHAR(255) NOT NULL,
     notes TEXT,
     user_id INT REFERENCES users(id),
     account_id INT REFERENCES accounts(id),
+    ref_num VARCHAR(255),
     created_at TIMESTAMP DEFAULT NOW()
 );
