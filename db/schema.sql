@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS accounts (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(255),
     type VARCHAR(20) CHECK (type IN ('checking', 'credit', 'savings')),
-    user_id INT REFERENCES users(id)
+    user_id INT REFERENCES users(id),
+    bank INT NOT NULL
 )
 
 CREATE TABLE IF NOT EXISTS transactions (

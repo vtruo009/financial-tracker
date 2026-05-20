@@ -33,6 +33,7 @@ export default async function Home() {
 					name: transaction.account_name,
 					type: transaction.account_type as ACCOUNT_TYPE,
 					userID: parseInt(transaction.user_id),
+					bank: transaction.bank,
 				},
 			};
 			acc[date].push(localTransaction);

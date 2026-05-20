@@ -1,6 +1,6 @@
 'use client';
 
-import { UploadIcon } from 'lucide-react';
+import { UploadIcon, Users } from 'lucide-react';
 import { Button } from './ui/button';
 import { uploadTransactions } from '@/lib/actions';
 import { Input } from './ui/input';
@@ -16,6 +16,11 @@ interface FileUploadProps {
 const FileUpload = ({ accounts }: FileUploadProps) => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [selectedAccount, setSelectedAccount] = useState<Account>(accounts[0]);
+	const [isOpen, setIsOpen] = useState<boolean>(false);
+
+	const handleOpenChange = (open: boolean) => {
+		setIsOpen(open);
+	};
 
 	const accountButton = (account: Account) => {
 		return (
@@ -34,7 +39,7 @@ const FileUpload = ({ accounts }: FileUploadProps) => {
 	};
 
 	return (
-		<Popover>
+		<Popover open={isOpen} onOpenChange={handleOpenChange}>
 			<PopoverTrigger asChild>
 				<Button className='cursor-pointer'>
 					<UploadIcon />
@@ -65,6 +70,7 @@ const FileUpload = ({ accounts }: FileUploadProps) => {
 
 							reader.readAsText(file);
 						}
+						setIsOpen(false);
 					}}
 				/>
 				{accounts.map((account: Account) => accountButton(account))}

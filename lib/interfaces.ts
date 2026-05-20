@@ -1,6 +1,6 @@
 export interface Transaction {
 	id: number;
-	refNum: string;
+	refNum?: string;
 	amount: number;
 	date: string;
 	rawName: string;
@@ -16,6 +16,7 @@ export interface Account {
 	name: string;
 	type: ACCOUNT_TYPE;
 	userID: number;
+	bank: BANK_TYPE;
 }
 
 export interface TransactionWithAccount extends Transaction {
@@ -36,10 +37,20 @@ export interface BankOfAmericaCSV {
 	'Reference Number': string;
 }
 
+export interface ChaseCSV {
+	'Transaction Date': string;
+	'Post Date': string;
+	Description: string;
+	Category: string;
+	Type: string;
+	Amount: string;
+	Memo: string;
+}
+
 /******************** ENUMS ********************/
 export enum CATEGORY {
-	FOODS_DRINKS = 'Food & Drinks',
-	MATERIALIST_DESIRES = 'Materialistic Desires',
+	FOODS_DRINK = 'Food & Drink',
+	MATERIALIST_DESIRE = 'Materialistic Desire',
 	HOBBY = 'Hobby',
 	TRAVEL = 'Travel',
 	BILL = 'Bill',
@@ -51,4 +62,10 @@ export enum ACCOUNT_TYPE {
 	CHECKING = 'checking',
 	SAVINGS = 'savings',
 	CREDIT = 'credit',
+}
+
+export enum BANK_TYPE {
+	BANK_OF_AMERICA,
+	CHASE,
+	CAPITAL_ONE,
 }
