@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge';
 import Papa from 'papaparse';
 import {
 	Account,
-	BANK_TYPE,
+	BANK_INSTITUTION,
 	BankOfAmericaCSV,
 	CATEGORY,
 	ChaseCSV,
@@ -83,11 +83,11 @@ const parseCapitalOne = (fileContent: string, account: Account) => {
 export const parseCSV = (fileContent: string, account: Account) => {
 	console.log(account.bank);
 	switch (account.bank) {
-		case BANK_TYPE.BANK_OF_AMERICA:
+		case BANK_INSTITUTION.BANK_OF_AMERICA:
 			return parseBOA(fileContent, account);
-		case BANK_TYPE.CHASE:
+		case BANK_INSTITUTION.CHASE:
 			return parseChase(fileContent, account);
-		case BANK_TYPE.CAPITAL_ONE:
+		case BANK_INSTITUTION.CAPITAL_ONE:
 			return parseCapitalOne(fileContent, account);
 		default:
 			console.log('Bank type does not match any available acount');

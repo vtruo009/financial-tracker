@@ -1,7 +1,11 @@
 'use server';
 
 import { neon } from '@neondatabase/serverless';
-import { Account, CATEGORY, TransactionWithAccountInput } from './interfaces';
+import {
+	AccountInput,
+	CATEGORY,
+	TransactionWithAccountInput,
+} from './interfaces';
 
 const DATABASE_URL = process.env.DATABASE_URL || '';
 const sql = neon(DATABASE_URL);
@@ -106,17 +110,19 @@ export const deleteTransaction = async (transactionId: string) => {
 };
 
 /******************************** ACCOUNTS ********************************/
-export const addAccount = async (account: Account) => {
+export const addAccount = async (account: AccountInput) => {
 	try {
 		const data = await sql`
 			INSERT INTO accounts (
 				name,
 				type,
-				user_id
+				user_id,
+				bank
 			) VALUES (
 				${account.name},
-				${account.type},
-				${account.userID} 
+				${account.type.toString()},
+				${account.userID},
+				${account.bank.toString()}
 			)
 		`;
 

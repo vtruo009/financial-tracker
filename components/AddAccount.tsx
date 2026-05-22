@@ -23,18 +23,20 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from './ui/select';
-import { ACCOUNT_TYPE } from '@/lib/interfaces';
+import { ACCOUNT_TYPE, BANK_INSTITUTION } from '@/lib/interfaces';
 import { addAccount } from '@/lib/actions';
 
 const AddAccount = () => {
 	const [name, setName] = useState('');
 	const [type, setType] = useState('');
+	const [bank, setBank] = useState('');
 
 	const handleClick = async () => {
 		await addAccount({
 			name,
 			type: type as ACCOUNT_TYPE,
 			userID: 1,
+			bank: bank as BANK_INSTITUTION,
 		});
 	};
 
@@ -76,6 +78,28 @@ const AddAccount = () => {
 							<SelectItem value={ACCOUNT_TYPE.CHECKING}>Checking</SelectItem>
 							<SelectItem value={ACCOUNT_TYPE.CREDIT}>Credit</SelectItem>
 							<SelectItem value={ACCOUNT_TYPE.SAVINGS}>Savings</SelectItem>
+						</SelectContent>
+					</Select>
+				</Field>
+				<Field>
+					<Label htmlFor='n'>Bank Institution</Label>
+					<Select onValueChange={(value) => setBank(value)}>
+						<SelectTrigger
+							size='sm'
+							className='border-0 focus-visible:ring-0 p-0 items-start text-muted-foreground'
+						>
+							<SelectValue placeholder='Select Account Type' />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectItem value={BANK_INSTITUTION.BANK_OF_AMERICA}>
+								{BANK_INSTITUTION.BANK_OF_AMERICA}
+							</SelectItem>
+							<SelectItem value={BANK_INSTITUTION.CAPITAL_ONE}>
+								{BANK_INSTITUTION.CAPITAL_ONE}
+							</SelectItem>
+							<SelectItem value={BANK_INSTITUTION.CHASE}>
+								{BANK_INSTITUTION.CHASE}
+							</SelectItem>
 						</SelectContent>
 					</Select>
 				</Field>

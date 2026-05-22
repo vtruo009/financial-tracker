@@ -16,7 +16,7 @@ export interface Account {
 	name: string;
 	type: ACCOUNT_TYPE;
 	userID: number;
-	bank: BANK_TYPE;
+	bank: BANK_INSTITUTION;
 }
 
 export interface TransactionWithAccount extends Transaction {
@@ -27,6 +27,8 @@ export type TransactionWithAccountInput = Omit<
 	TransactionWithAccount,
 	'id' | 'account'
 >;
+
+export type AccountInput = Omit<Account, 'id'>;
 
 // ******************** CSV ********************
 export interface BankOfAmericaCSV {
@@ -64,8 +66,8 @@ export enum ACCOUNT_TYPE {
 	CREDIT = 'credit',
 }
 
-export enum BANK_TYPE {
-	BANK_OF_AMERICA,
-	CHASE,
-	CAPITAL_ONE,
+export enum BANK_INSTITUTION {
+	BANK_OF_AMERICA = 'Bank of America',
+	CHASE = 'Chase',
+	CAPITAL_ONE = 'Capital One',
 }
