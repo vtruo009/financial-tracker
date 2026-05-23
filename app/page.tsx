@@ -17,6 +17,7 @@ import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import React from 'react';
 import TransactionRow from '@/components/TransactionRow';
 import AddAccount from '@/components/AddAccount';
+import SummaryCards from '@/components/SummaryCards';
 
 export default async function Home() {
 	console.log(await getMonthlyTrends(1));
@@ -56,6 +57,7 @@ export default async function Home() {
 			<main className='flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start'>
 				{/* <FileUpload accounts={accounts} /> */}
 				<AddAccount />
+				<SummaryCards />
 				<h2>Transactions</h2>
 				{/* <div className='border border-gray-200 rounded-sm overflow-hidden'>
 					<Table>
