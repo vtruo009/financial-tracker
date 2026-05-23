@@ -199,6 +199,36 @@ export const getSpendingByCategory = async (userId: number) => {
 	}
 };
 
-export const getTopMerchant = async (userId: number, limit: number) => {};
+/**
+ * Returns top N merchants by total spend
+ * @param userId
+ * @param limit
+ */
+export const getTopMerchant = async (userId: number, limit: number) => {
+	try {
+		const data = await sql`
+			SELECT 
+				clean_name as merchant,
+				ABS(SUM(amount)) as total_spending
+			FROM transactions
+			WHERE
+				EXTRACT(month FROM date) = EXTRACT(month FROM CURRENT_DATE) AND
+				EXTRACT(year from date) = EXTRACT(year from CURRENT_DATE) AND
+				amount < 0 AND
+				user_id = ${userId}
+			GROUP BY clean_name
+			ORDER BY total_spending DESC
+			LIMIT ${limit}
+		`;
+
+		if (!data[0].merchant && !data[0].total_spending) {
+			throw new Error('No total returned!');
+		}
+
+		return data;
+	} catch (error) {
+		console.error('[getTopMerchant]:', error);
+	}
+};
 
 export const getMonthlyTrends = async (userId: number) => {};
