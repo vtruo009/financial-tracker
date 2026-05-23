@@ -4,6 +4,10 @@ import { neon } from '@neondatabase/serverless';
 import {
 	AccountInput,
 	CATEGORY,
+	CategorySpendingPayload,
+	MonthlySummaryPayload,
+	MonthlyTrendPayload,
+	TopMerchantPayload,
 	TransactionWithAccountInput,
 } from './interfaces';
 
@@ -146,7 +150,9 @@ export const getAllAccounts = async (userId: number = 1) => {
  * returns total spent and total income for the current month
  * @param userId
  */
-export const getMonthlySummary = async (userId: number) => {
+export const getMonthlySummary = async (
+	userId: number,
+): Promise<MonthlySummaryPayload | undefined> => {
 	try {
 		const data = await sql`
 			SELECT 
@@ -163,7 +169,10 @@ export const getMonthlySummary = async (userId: number) => {
 			throw new Error('No total returned!');
 		}
 
-		return data[0];
+		return {
+			total_income: data[0].total_income,
+			total_spending: data[0].total_spending,
+		};
 	} catch (error) {
 		console.error('[getMonthlySummary]:', error);
 	}
@@ -173,7 +182,9 @@ export const getMonthlySummary = async (userId: number) => {
  * Returns total spent per category for the current month
  * @param userId
  */
-export const getSpendingByCategory = async (userId: number) => {
+export const getSpendingByCategory = async (
+	userId: number,
+): Promise<CategorySpendingPayload[] | undefined> => {
 	try {
 		const data = await sql`
 			SELECT 
@@ -189,11 +200,15 @@ export const getSpendingByCategory = async (userId: number) => {
 			ORDER BY total_spending DESC
 		`;
 
-		if (!data[0].category && !data[0].total_spending) {
+		if (!data || data.length === 0) {
 			throw new Error('No total returned!');
 		}
 
-		return data;
+		const results: CategorySpendingPayload[] = data.map((row) => ({
+			category: row.category,
+			total_spending: row.total_spending,
+		}));
+		return results;
 	} catch (error) {
 		console.error('[getSpendingByCategory]:', error);
 	}
@@ -204,7 +219,10 @@ export const getSpendingByCategory = async (userId: number) => {
  * @param userId
  * @param limit
  */
-export const getTopMerchant = async (userId: number, limit: number) => {
+export const getTopMerchant = async (
+	userId: number,
+	limit: number,
+): Promise<TopMerchantPayload[] | undefined> => {
 	try {
 		const data = await sql`
 			SELECT 
@@ -221,11 +239,15 @@ export const getTopMerchant = async (userId: number, limit: number) => {
 			LIMIT ${limit}
 		`;
 
-		if (!data[0].merchant && !data[0].total_spending) {
+		if (!data || data.length === 0) {
 			throw new Error('No total returned!');
 		}
 
-		return data;
+		const results: TopMerchantPayload[] = data.map((row) => ({
+			merchant: row.merchant,
+			total_spending: row.total_spending,
+		}));
+		return results;
 	} catch (error) {
 		console.error('[getTopMerchant]:', error);
 	}
@@ -235,7 +257,9 @@ export const getTopMerchant = async (userId: number, limit: number) => {
  * Returns total spent per month for the last 6 months
  * @param userId
  */
-export const getMonthlyTrends = async (userId: number) => {
+export const getMonthlyTrends = async (
+	userId: number,
+): Promise<MonthlyTrendPayload[] | undefined> => {
 	try {
 		const data = await sql`
 			SELECT 
@@ -250,11 +274,15 @@ export const getMonthlyTrends = async (userId: number) => {
 			ORDER BY month ASC;
 		`;
 
-		if (!data[0].month && !data[0].total_spending) {
+		if (!data || data.length === 0) {
 			throw new Error('No total returned!');
 		}
 
-		return data;
+		const results: MonthlyTrendPayload[] = data.map((row) => ({
+			month: row.month,
+			total_spending: row.total_spending,
+		}));
+		return results;
 	} catch (error) {
 		console.error('[getMonthlyTrends]:', error);
 	}

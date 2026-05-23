@@ -71,3 +71,24 @@ export enum BANK_INSTITUTION {
 	CHASE = 'Chase',
 	CAPITAL_ONE = 'Capital One',
 }
+
+/******************* DATABASE *******************/
+interface SpendingsPayload {
+	total_spending: string;
+}
+
+export interface MonthlySummaryPayload extends SpendingsPayload {
+	total_income: string;
+}
+
+export interface CategorySpendingPayload extends SpendingsPayload {
+	category: string;
+}
+
+export interface TopMerchantPayload extends SpendingsPayload {
+	merchant: string;
+}
+
+export interface MonthlyTrendPayload extends SpendingsPayload {
+	month: string;
+}
