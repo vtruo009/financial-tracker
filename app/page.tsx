@@ -1,6 +1,7 @@
 import {
 	getAllAccounts,
 	getMonthlySummary,
+	getMonthlyTrends,
 	getSpendingByCategory,
 	getTopMerchant,
 	getTransactions,
@@ -18,7 +19,7 @@ import TransactionRow from '@/components/TransactionRow';
 import AddAccount from '@/components/AddAccount';
 
 export default async function Home() {
-	console.log(await getTopMerchant(1, 3));
+	console.log(await getMonthlyTrends(1));
 	// const allTransactions = await getTransactions();
 	// const groupedTransactions = allTransactions?.reduce(
 	// 	(acc, transaction) => {

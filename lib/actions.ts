@@ -178,7 +178,7 @@ export const getSpendingByCategory = async (userId: number) => {
 		const data = await sql`
 			SELECT 
 				category,
-				ABS(SUM(amount)) as total_spending
+				ABS(SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END)) as total_spending
 			FROM transactions
 			WHERE
 				EXTRACT(month FROM date) = EXTRACT(month FROM CURRENT_DATE) AND
@@ -209,7 +209,7 @@ export const getTopMerchant = async (userId: number, limit: number) => {
 		const data = await sql`
 			SELECT 
 				clean_name as merchant,
-				ABS(SUM(amount)) as total_spending
+				ABS(SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END)) as total_spending
 			FROM transactions
 			WHERE
 				EXTRACT(month FROM date) = EXTRACT(month FROM CURRENT_DATE) AND
@@ -231,4 +231,31 @@ export const getTopMerchant = async (userId: number, limit: number) => {
 	}
 };
 
-export const getMonthlyTrends = async (userId: number) => {};
+/**
+ * Returns total spent per month for the last 6 months
+ * @param userId
+ */
+export const getMonthlyTrends = async (userId: number) => {
+	try {
+		const data = await sql`
+			SELECT 
+				DATE_TRUNC('month', date) as month,
+				SUM(CASE WHEN amount < 0 THEN ABS(amount) ELSE 0 END) as total_spending
+			FROM transactions 
+			WHERE
+				(date >= DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '6 month') AND
+				(amount < 0) AND
+				(user_id = ${userId})
+			GROUP BY month
+			ORDER BY month ASC;
+		`;
+
+		if (!data[0].month && !data[0].total_spending) {
+			throw new Error('No total returned!');
+		}
+
+		return data;
+	} catch (error) {
+		console.error('[getMonthlyTrends]:', error);
+	}
+};
