@@ -78,7 +78,7 @@ export const getTransaction = async (transactionId: string) => {
 };
 
 export const updateTransaction = async (
-	transactionId: string,
+	transactionId: number,
 	category: CATEGORY,
 	notes: string | null,
 ) => {
@@ -112,7 +112,7 @@ export const deleteTransaction = async (transactionId: string) => {
 /******************************** ACCOUNTS ********************************/
 export const addAccount = async (account: AccountInput) => {
 	try {
-		const data = await sql`
+		return await sql`
 			INSERT INTO accounts (
 				name,
 				type,
@@ -120,15 +120,13 @@ export const addAccount = async (account: AccountInput) => {
 				bank
 			) VALUES (
 				${account.name},
-				${account.type.toString()},
+				${account.type},
 				${account.userID},
-				${account.bank.toString()}
+				${account.bank}
 			)
 		`;
-
-		console.log(data);
 	} catch (error) {
-		console.error('[addAccount', error);
+		console.error('[addAccount]:', error);
 	}
 };
 
@@ -142,3 +140,37 @@ export const getAllAccounts = async (userId: number = 1) => {
 		console.error('[getAllAccounts]', error);
 	}
 };
+
+/******************************** AGGREATION ********************************/
+/**
+ * returns total spent and total income for the current month
+ * @param userId
+ */
+export const getMonthlySummary = async (userId: number) => {
+	try {
+		const data = await sql`
+			SELECT 
+				SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) AS total_income,
+				ABS(SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END)) AS total_spending
+			FROM transactions
+			WHERE
+				EXTRACT(month FROM date) = EXTRACT(month FROM CURRENT_DATE) AND
+				EXTRACT(year from date) = EXTRACT(year from CURRENT_DATE) AND
+				user_id = ${userId}
+		`;
+
+		if (!data[0].total_income && !data[0].total_spending) {
+			throw new Error('No total returned!');
+		}
+
+		return data[0];
+	} catch (error) {
+		console.error('[getMonthlySummary]:', error);
+	}
+};
+
+export const getSpendingByCategory = async (userId: number) => {};
+
+export const getTopMerchant = async (userId: number, limit: number) => {};
+
+export const getMonthlyTrends = async (userId: number) => {};

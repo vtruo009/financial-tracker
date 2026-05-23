@@ -60,7 +60,7 @@ const TransactionRow = ({
 					</TableCell>
 				</TableRow>
 			</DialogTrigger>
-			<DialogContent className='sm:max-w-sm font-nunito'>
+			<DialogContent className='sm:max-w-sm'>
 				<DialogHeader>
 					<DialogTitle className='font-bold'>Transaction Details</DialogTitle>
 					<DialogDescription>

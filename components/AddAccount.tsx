@@ -48,7 +48,7 @@ const AddAccount = () => {
 					Add Account
 				</Button>
 			</DialogTrigger>
-			<DialogContent className='sm:max-w-sm font-nunito'>
+			<DialogContent className='sm:max-w-sm'>
 				<DialogHeader>
 					<DialogTitle>Add an Account</DialogTitle>
 					<DialogDescription>
@@ -74,7 +74,7 @@ const AddAccount = () => {
 						>
 							<SelectValue placeholder='Select Account Type' />
 						</SelectTrigger>
-						<SelectContent>
+						<SelectContent className='p-1'>
 							<SelectItem value={ACCOUNT_TYPE.CHECKING}>Checking</SelectItem>
 							<SelectItem value={ACCOUNT_TYPE.CREDIT}>Credit</SelectItem>
 							<SelectItem value={ACCOUNT_TYPE.SAVINGS}>Savings</SelectItem>
@@ -90,7 +90,7 @@ const AddAccount = () => {
 						>
 							<SelectValue placeholder='Select Account Type' />
 						</SelectTrigger>
-						<SelectContent>
+						<SelectContent className='p-1'>
 							<SelectItem value={BANK_INSTITUTION.BANK_OF_AMERICA}>
 								{BANK_INSTITUTION.BANK_OF_AMERICA}
 							</SelectItem>

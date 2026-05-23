@@ -11,7 +11,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { updateTransaction } from '@/lib/actions';
 
 interface CategorySelectProps {
-	transactionId: string;
+	transactionId: number;
 	selectedCategory: string;
 	setSelectedCategory: Dispatch<SetStateAction<CATEGORY>>;
 	notes: string;
@@ -41,11 +41,7 @@ const CategorySelect = ({
 				<SelectGroup>
 					{Object.values(CATEGORY).map((value) => {
 						return (
-							<SelectItem
-								key={value}
-								value={value}
-								className='font-nunito text-sm'
-							>
+							<SelectItem key={value} value={value} className='text-sm'>
 								{value}
 							</SelectItem>
 						);

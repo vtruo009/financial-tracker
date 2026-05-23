@@ -1,4 +1,8 @@
-import { getAllAccounts, getTransactions } from '../lib/actions';
+import {
+	getAllAccounts,
+	getMonthlySummary,
+	getTransactions,
+} from '../lib/actions';
 import {
 	Account,
 	ACCOUNT_TYPE,
@@ -12,44 +16,45 @@ import TransactionRow from '@/components/TransactionRow';
 import AddAccount from '@/components/AddAccount';
 
 export default async function Home() {
-	const allTransactions = await getTransactions();
-	const groupedTransactions = allTransactions?.reduce(
-		(acc, transaction) => {
-			const date = new Date(transaction.date).toDateString();
-			if (!acc[date]) acc[date] = [];
-			const localTransaction: TransactionWithAccount = {
-				id: transaction.id,
-				refNum: transaction.ref_num,
-				amount: parseFloat(transaction.amount),
-				date: transaction.date,
-				rawName: transaction.raw_name,
-				cleanName: transaction.clean_name,
-				category: transaction.category,
-				userID: parseInt(transaction.user_id),
-				accountID: parseInt(transaction.account_id),
-				notes: transaction.notes,
-				account: {
-					id: parseInt(transaction.account_id),
-					name: transaction.account_name,
-					type: transaction.account_type as ACCOUNT_TYPE,
-					userID: parseInt(transaction.user_id),
-					bank: transaction.bank,
-				},
-			};
-			acc[date].push(localTransaction);
-			return acc;
-		},
-		{} as Record<string, TransactionWithAccount[]>,
-	);
-	const accounts = (await getAllAccounts()) as Account[];
+	console.log(await getMonthlySummary(1));
+	// const allTransactions = await getTransactions();
+	// const groupedTransactions = allTransactions?.reduce(
+	// 	(acc, transaction) => {
+	// 		const date = new Date(transaction.date).toDateString();
+	// 		if (!acc[date]) acc[date] = [];
+	// 		const localTransaction: TransactionWithAccount = {
+	// 			id: transaction.id,
+	// 			refNum: transaction.ref_num,
+	// 			amount: parseFloat(transaction.amount),
+	// 			date: transaction.date,
+	// 			rawName: transaction.raw_name,
+	// 			cleanName: transaction.clean_name,
+	// 			category: transaction.category,
+	// 			userID: parseInt(transaction.user_id),
+	// 			accountID: parseInt(transaction.account_id),
+	// 			notes: transaction.notes,
+	// 			account: {
+	// 				id: parseInt(transaction.account_id),
+	// 				name: transaction.account_name,
+	// 				type: transaction.account_type as ACCOUNT_TYPE,
+	// 				userID: parseInt(transaction.user_id),
+	// 				bank: transaction.bank,
+	// 			},
+	// 		};
+	// 		acc[date].push(localTransaction);
+	// 		return acc;
+	// 	},
+	// 	{} as Record<string, TransactionWithAccount[]>,
+	// );
+	// const accounts = (await getAllAccounts()) as Account[];
 
 	return (
-		<div className='flex flex-col flex-1 items-center justify-center bg-zinc-50 font-nunito dark:bg-black'>
+		<div className='flex flex-col flex-1 items-center justify-center bg-zinc-50 dark:bg-black'>
 			<main className='flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start'>
-				<FileUpload accounts={accounts} />
+				{/* <FileUpload accounts={accounts} /> */}
 				<AddAccount />
 				<h2>Transactions</h2>
-				<div className='border border-gray-200 rounded-sm overflow-hidden'>
+				{/* <div className='border border-gray-200 rounded-sm overflow-hidden'>
 					<Table>
 						<TableBody>
 							{groupedTransactions &&
@@ -70,7 +75,7 @@ export default async function Home() {
 								)}
 						</TableBody>
 					</Table>
-				</div>
+				</div> */}
 			</main>
 		</div>
 	);
