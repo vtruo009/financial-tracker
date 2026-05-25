@@ -3,9 +3,10 @@ import { getMonthlyTrends, getSpendingByCategory } from '@/lib/actions';
 import { Card, CardHeader, CardTitle, CardContent } from './ui/card';
 import MonthlyTrendsChartClient from './MonthlyTrendsChartClient';
 import SpendingByCategoryChartClient from './SpendingByCategoryChartClient';
+import { DEFAULT_USER_ID } from '@/lib/mixins';
 
 const MonthlyTrendsChart = async () => {
-	const data = await getMonthlyTrends(1);
+	const data = await getMonthlyTrends(DEFAULT_USER_ID);
 
 	if (!data || data.length === 0)
 		return <p>Unable to retrieve monthly trends</p>;
@@ -23,7 +24,7 @@ const MonthlyTrendsChart = async () => {
 };
 
 const SpendingByCategoryChart = async () => {
-	const data = await getSpendingByCategory(1); // TODO: Authorization
+	const data = await getSpendingByCategory(DEFAULT_USER_ID); // TODO: Authorization
 
 	if (!data || data.length === 0)
 		return <p>Unable to retrieve spendings by category</p>;

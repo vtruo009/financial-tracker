@@ -23,7 +23,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from './ui/select';
-import { ACCOUNT_TYPE, BANK_INSTITUTION } from '@/lib/interfaces';
+import { ACCOUNT_TYPE, BANK_INSTITUTION } from '@/lib/mixins';
 import { addAccount } from '@/lib/actions';
 
 const AddAccount = () => {

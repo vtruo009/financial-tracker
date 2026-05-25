@@ -8,9 +8,10 @@ import {
 	getTopMerchant,
 } from '@/lib/actions';
 import { currencyFormatter } from '@/lib/utils';
+import { DEFAULT_USER_ID } from '@/lib/mixins';
 
 const MonthlySummaryCard = async () => {
-	const monthlySummary = await getMonthlySummary(1); // TODO: Authorization
+	const monthlySummary = await getMonthlySummary(DEFAULT_USER_ID); // TODO: Authorization
 
 	if (!monthlySummary) return <p>Unable to fetch monthly summary</p>;
 
@@ -21,21 +22,17 @@ const MonthlySummaryCard = async () => {
 			</CardHeader>
 			<CardContent>
 				<Label>Total Income</Label>
-				<p>
-					{currencyFormatter.format(parseFloat(monthlySummary.total_income))}
-				</p>
+				<p>{currencyFormatter.format(monthlySummary.total_income)}</p>
 				<Separator orientation='vertical' />
 				<Label>Total Spending</Label>
-				<p>
-					{currencyFormatter.format(parseFloat(monthlySummary.total_spending))}
-				</p>
+				<p>{currencyFormatter.format(monthlySummary.total_spending)}</p>
 			</CardContent>
 		</Card>
 	);
 };
 
 const CategorySpendingsCard = async () => {
-	const categorySpendings = await getSpendingByCategory(1);
+	const categorySpendings = await getSpendingByCategory(DEFAULT_USER_ID);
 
 	if (!categorySpendings) return <p>Unable to fetch spendings by category</p>;
 
@@ -48,9 +45,7 @@ const CategorySpendingsCard = async () => {
 				{categorySpendings.map((spending) => (
 					<div key={spending.category} className='flex justify-between'>
 						<Label>{spending.category}</Label>
-						<p>
-							{currencyFormatter.format(parseFloat(spending.total_spending))}
-						</p>
+						<p>{currencyFormatter.format(spending.total_spending)}</p>
 					</div>
 				))}
 			</CardContent>
@@ -72,9 +67,7 @@ const TopMerchantsCard = async () => {
 				{topMerchants.map((merchant) => (
 					<div key={merchant.merchant} className='flex justify-between'>
 						<Label>{merchant.merchant}</Label>
-						<p>
-							{currencyFormatter.format(parseFloat(merchant.total_spending))}
-						</p>
+						<p>{currencyFormatter.format(merchant.total_spending)}</p>
 					</div>
 				))}
 			</CardContent>

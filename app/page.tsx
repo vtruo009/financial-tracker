@@ -11,7 +11,7 @@ import {
 	ACCOUNT_TYPE,
 	Transaction,
 	TransactionWithAccount,
-} from '../lib/interfaces';
+} from '../lib/mixins';
 import FileUpload from '@/components/FileUpload';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import React from 'react';

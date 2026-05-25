@@ -1,4 +1,4 @@
-import { CATEGORY } from '@/lib/interfaces';
+import { CATEGORY } from '@/lib/mixins';
 import {
 	BalloonIcon,
 	HamburgerIcon,

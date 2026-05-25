@@ -1,6 +1,6 @@
 'use client';
 
-import { Transaction } from '@/lib/interfaces';
+import { Transaction } from '@/lib/mixins';
 import CategorySymbol from './CategorySymbol';
 import { TableCell, TableRow } from './ui/table';
 import {

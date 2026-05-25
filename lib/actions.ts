@@ -9,7 +9,7 @@ import {
 	MonthlyTrendPayload,
 	TopMerchantPayload,
 	TransactionWithAccountInput,
-} from './interfaces';
+} from './mixins';
 
 const DATABASE_URL = process.env.DATABASE_URL || '';
 const sql = neon(DATABASE_URL);

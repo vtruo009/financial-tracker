@@ -8,7 +8,7 @@ import {
 	CATEGORY,
 	ChaseCSV,
 	TransactionWithAccountInput,
-} from './interfaces';
+} from './mixins';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));

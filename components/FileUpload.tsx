@@ -6,7 +6,7 @@ import { uploadTransactions } from '@/lib/actions';
 import { Input } from './ui/input';
 import { useRef, useState } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
-import { Account } from '@/lib/interfaces';
+import { Account } from '@/lib/mixins';
 import { parseCSV } from '@/lib/utils';
 
 interface FileUploadProps {

@@ -1,3 +1,6 @@
+export const DEFAULT_USER_ID = 1;
+
+// ******************** INTERFACES ********************
 export interface Transaction {
 	id: number;
 	refNum?: string;

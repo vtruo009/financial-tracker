@@ -7,7 +7,7 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from './ui/chart';
-import { MonthlyTrendPayload } from '@/lib/interfaces';
+import { MonthlyTrendPayload } from '@/lib/mixins';
 import { currencyFormatter, dateFormatter } from '@/lib/utils';
 
 interface MonthlyTrendsChartClientProps {
