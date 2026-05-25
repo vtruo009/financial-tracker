@@ -18,9 +18,9 @@ import React from 'react';
 import TransactionRow from '@/components/TransactionRow';
 import AddAccount from '@/components/AddAccount';
 import SummaryCards from '@/components/SummaryCards';
+import DashboardCharts from '@/components/DashboardCharts';
 
 export default async function Home() {
-	console.log(await getMonthlyTrends(1));
 	// const allTransactions = await getTransactions();
 	// const groupedTransactions = allTransactions?.reduce(
 	// 	(acc, transaction) => {
@@ -58,6 +58,7 @@ export default async function Home() {
 				{/* <FileUpload accounts={accounts} /> */}
 				<AddAccount />
 				<SummaryCards />
+				<DashboardCharts />
 				<h2>Transactions</h2>
 				{/* <div className='border border-gray-200 rounded-sm overflow-hidden'>
 					<Table>
