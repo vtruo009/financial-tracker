@@ -32,7 +32,7 @@ const getCategoryIcon = (category: string, otherProps?: LucideProps) => {
 	return icons[category];
 };
 
-const CategorySymbol = ({ category }: { category: CATEGORY }) => {
+const CategorySymbol = ({ category }: { category: string }) => {
 	return (
 		<div
 			className='w-8 h-8 rounded-full flex items-center justify-center'

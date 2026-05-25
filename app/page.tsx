@@ -1,67 +1,36 @@
-import {
-	getAllAccounts,
-	getMonthlySummary,
-	getMonthlyTrends,
-	getSpendingByCategory,
-	getTopMerchant,
-	getTransactions,
-} from '../lib/actions';
-import {
-	Account,
-	ACCOUNT_TYPE,
-	Transaction,
-	TransactionWithAccount,
-} from '../lib/mixins';
+import { getAllAccounts, getTransactions } from '../lib/actions';
+import { Account, Transaction } from '../lib/mixins';
 import FileUpload from '@/components/FileUpload';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import React from 'react';
 import TransactionRow from '@/components/TransactionRow';
 import AddAccount from '@/components/AddAccount';
 import SummaryCards from '@/components/SummaryCards';
-import DashboardCharts from '@/components/DashboardCharts';
 import Link from 'next/link';
 
 export default async function Home() {
-	// const allTransactions = await getTransactions();
-	// const groupedTransactions = allTransactions?.reduce(
-	// 	(acc, transaction) => {
-	// 		const date = new Date(transaction.date).toDateString();
-	// 		if (!acc[date]) acc[date] = [];
-	// 		const localTransaction: TransactionWithAccount = {
-	// 			id: transaction.id,
-	// 			refNum: transaction.ref_num,
-	// 			amount: parseFloat(transaction.amount),
-	// 			date: transaction.date,
-	// 			rawName: transaction.raw_name,
-	// 			cleanName: transaction.clean_name,
-	// 			category: transaction.category,
-	// 			userID: parseInt(transaction.user_id),
-	// 			accountID: parseInt(transaction.account_id),
-	// 			notes: transaction.notes,
-	// 			account: {
-	// 				id: parseInt(transaction.account_id),
-	// 				name: transaction.account_name,
-	// 				type: transaction.account_type as ACCOUNT_TYPE,
-	// 				userID: parseInt(transaction.user_id),
-	// 				bank: transaction.bank,
-	// 			},
-	// 		};
-	// 		acc[date].push(localTransaction);
-	// 		return acc;
-	// 	},
-	// 	{} as Record<string, TransactionWithAccount[]>,
-	// );
-	// const accounts = (await getAllAccounts()) as Account[];
+	const allTransactions = await getTransactions();
+
+	const groupedTransactions = allTransactions?.reduce(
+		(acc, transaction) => {
+			const date = new Date(transaction.date).toDateString();
+			if (!acc[date]) acc[date] = [];
+			acc[date].push(transaction);
+			return acc;
+		},
+		{} as Record<string, Transaction[]>,
+	);
+	const accounts = (await getAllAccounts()) as Account[];
 
 	return (
 		<div className='flex flex-col flex-1 items-center justify-center bg-zinc-50 dark:bg-black'>
 			<main className='flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start'>
-				{/* <FileUpload accounts={accounts} /> */}
+				<FileUpload accounts={accounts} />
 				<Link href='/dashboard'>Dashboard</Link>
 				<AddAccount />
 				<SummaryCards />
 				<h2>Transactions</h2>
-				{/* <div className='border border-gray-200 rounded-sm overflow-hidden'>
+				<div className='border border-gray-200 rounded-sm overflow-hidden'>
 					<Table>
 						<TableBody>
 							{groupedTransactions &&
@@ -82,7 +51,7 @@ export default async function Home() {
 								)}
 						</TableBody>
 					</Table>
-				</div> */}
+				</div>
 			</main>
 		</div>
 	);

@@ -20,13 +20,15 @@ import { Label } from './ui/label';
 import CategorySelect from './CategorySelect';
 import { useState } from 'react';
 import { updateTransaction } from '@/lib/actions';
+import { currencyFormatter } from '@/lib/utils';
 
 const TransactionRow = ({
 	id,
-	category,
-	cleanName,
 	amount,
+	cleanName,
+	category,
 	notes,
+	accountName,
 }: Transaction) => {
 	const [selectedCategory, setSelectedCategory] = useState(category);
 	const [currentNotes, setCurrentNotes] = useState(notes || '');
@@ -56,7 +58,9 @@ const TransactionRow = ({
 					</TableCell>
 
 					<TableCell className='content-start'>
-						<p className='font-bold text-lg text-right'>${amount.toFixed(2)}</p>
+						<p className='font-bold text-lg text-right'>
+							{currencyFormatter.format(amount)}
+						</p>
 					</TableCell>
 				</TableRow>
 			</DialogTrigger>
@@ -70,6 +74,7 @@ const TransactionRow = ({
 				<FieldGroup>
 					<Field orientation='vertical'>
 						<p className='text-left text-lg font-semibold'>{cleanName}</p>
+						<p className='text-left text-md'>{accountName}</p>
 						<CategorySelect
 							transactionId={id}
 							selectedCategory={selectedCategory}
@@ -77,7 +82,7 @@ const TransactionRow = ({
 							notes={currentNotes}
 						/>
 					</Field>
-					<Field>${amount}</Field>
+					<Field>{currencyFormatter.format(amount)}</Field>
 					<Field>
 						<Label>Notes</Label>
 						<Textarea

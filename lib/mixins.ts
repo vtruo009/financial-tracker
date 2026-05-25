@@ -3,16 +3,46 @@ export const DEFAULT_USER_ID = 1;
 // ******************** INTERFACES ********************
 export interface Transaction {
 	id: number;
-	refNum?: string;
 	amount: number;
-	date: string;
-	rawName: string;
+	date: Date;
 	cleanName: string;
 	category: CATEGORY;
-	userID: number;
-	accountID: number;
-	notes?: string | null;
+	notes: string;
+	accountName: string;
 }
+
+export interface TransactionInput {
+	amount: number;
+	date: string;
+	raw_name: string;
+	clean_name: string;
+	category: string;
+	user_id: number;
+	account_id: number;
+	ref_num: string;
+	notes: string;
+}
+
+export interface TransactionPayload {
+	id: number;
+	amount: string;
+	date: string;
+	raw_name: string;
+	clean_name: string;
+	category: string;
+	user_id: number;
+	account_id: number;
+	ref_num: string;
+	notes: string;
+	created_at: Date;
+	account_name: string;
+	account_type: string;
+}
+
+// export type TransactionInput = Omit<
+// 	TransactionPayload,
+// 	'id' | 'created_at' | 'account_name' | 'account_type'
+// >;
 
 export interface Account {
 	id: number;
@@ -21,15 +51,6 @@ export interface Account {
 	userID: number;
 	bank: BANK_INSTITUTION;
 }
-
-export interface TransactionWithAccount extends Transaction {
-	account: Account;
-}
-
-export type TransactionWithAccountInput = Omit<
-	TransactionWithAccount,
-	'id' | 'account'
->;
 
 export type AccountInput = Omit<Account, 'id'>;
 

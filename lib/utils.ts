@@ -7,7 +7,7 @@ import {
 	BankOfAmericaCSV,
 	CATEGORY,
 	ChaseCSV,
-	TransactionWithAccountInput,
+	TransactionInput,
 } from './mixins';
 
 export function cn(...inputs: ClassValue[]) {
@@ -20,22 +20,23 @@ const config = {
 };
 
 const parseBOA = (fileContent: string, account: Account) => {
-	const transactions: TransactionWithAccountInput[] = [];
+	const transactions: TransactionInput[] = [];
 	const results: Papa.ParseResult<BankOfAmericaCSV> = Papa.parse(
 		fileContent,
 		config,
 	);
 
 	for (const row of results.data) {
-		const transaction: TransactionWithAccountInput = {
-			refNum: row['Reference Number'],
+		const transaction: TransactionInput = {
 			amount: parseFloat(row.Amount),
 			date: row['Posted Date'],
-			rawName: row.Payee,
-			cleanName: row.Payee, // TODO: AI Renaming
+			raw_name: row.Payee,
+			clean_name: row.Payee, // TODO: AI Renaming
 			category: CATEGORY.MISC, // TODO: AI auto-categorization
-			userID: 1, // TODO: Authentication
-			accountID: account.id,
+			user_id: 1, // TODO: Authentication
+			account_id: account.id,
+			ref_num: row['Reference Number'],
+			notes: '',
 		};
 
 		transactions.push(transaction);
@@ -48,21 +49,22 @@ const parseBOA = (fileContent: string, account: Account) => {
 };
 
 const parseChase = (fileContent: string, account: Account) => {
-	const transactions: TransactionWithAccountInput[] = [];
+	const transactions: TransactionInput[] = [];
 	const results: Papa.ParseResult<ChaseCSV> = Papa.parse(fileContent, {
 		header: true,
 		skipEmptyLines: true,
 	});
 
 	for (const row of results.data) {
-		const transaction: TransactionWithAccountInput = {
+		const transaction: TransactionInput = {
 			amount: parseFloat(row.Amount),
 			date: row['Transaction Date'],
-			rawName: row.Description,
-			cleanName: row.Description, // TODO: AI Renaming
+			raw_name: row.Description,
+			clean_name: row.Description, // TODO: AI Renaming
 			category: row.Category as CATEGORY,
-			userID: 1, // TODO: Authentication
-			accountID: account.id,
+			user_id: 1, // TODO: Authentication
+			account_id: account.id,
+			ref_num: '',
 			notes: row.Memo,
 		};
 
@@ -76,12 +78,14 @@ const parseChase = (fileContent: string, account: Account) => {
 };
 
 const parseCapitalOne = (fileContent: string, account: Account) => {
-	const transactions: TransactionWithAccountInput[] = [];
+	const transactions: TransactionInput[] = [];
 	return transactions;
 };
 
-export const parseCSV = (fileContent: string, account: Account) => {
-	console.log(account.bank);
+export const parseCSV = (
+	fileContent: string,
+	account: Account,
+): TransactionInput[] => {
 	switch (account.bank) {
 		case BANK_INSTITUTION.BANK_OF_AMERICA:
 			return parseBOA(fileContent, account);

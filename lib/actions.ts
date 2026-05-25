@@ -8,7 +8,9 @@ import {
 	MonthlySummaryPayload,
 	MonthlyTrendPayload,
 	TopMerchantPayload,
-	TransactionWithAccountInput,
+	Transaction,
+	TransactionInput,
+	TransactionPayload,
 } from './mixins';
 
 const DATABASE_URL = process.env.DATABASE_URL || '';
@@ -20,9 +22,7 @@ export async function getData() {
 }
 
 /******************************** TRANSACTIONS ********************************/
-export const uploadTransactions = async (
-	transactions: TransactionWithAccountInput[],
-) => {
+export const uploadTransactions = async (transactions: TransactionInput[]) => {
 	try {
 		const promises = transactions.map((row) => {
 			return sql`
@@ -33,19 +33,19 @@ export const uploadTransactions = async (
 					clean_name,
 					category,
 					user_id,
-					notes,
 					account_id,
-					ref_num
+					ref_num,
+					notes
 				) VALUES (
 					${row.amount},
 					${row.date},
-					${row.rawName},
-					${row.cleanName},
+					${row.raw_name},
+					${row.clean_name},
 					${row.category},
-					${row.userID},
-					${row.notes},
-					${row.accountID},
-					${row.refNum}
+					${row.user_id},
+					${row.account_id},
+					${row.ref_num},
+					${row.notes}
 				);
 			`;
 		});
@@ -58,13 +58,25 @@ export const uploadTransactions = async (
 
 export const getTransactions = async (
 	userId: number = 1,
-	category?: CATEGORY,
-) => {
+	category?: string,
+): Promise<Transaction[] | undefined> => {
 	try {
-		return await sql.query(
+		const data: TransactionPayload[] = (await sql.query(
 			'SELECT transactions.*, accounts.name AS account_name, accounts.type AS account_type FROM transactions JOIN accounts ON transactions.account_id = accounts.id WHERE transactions.user_id = $1 AND (category = $2 OR $2 IS NULL) ORDER BY date DESC',
 			[userId, category],
-		);
+		)) as TransactionPayload[];
+
+		const results: Transaction[] = data.map((row) => ({
+			id: row.id,
+			amount: parseFloat(row.amount),
+			date: new Date(row.date),
+			cleanName: row.clean_name,
+			category: row.category as CATEGORY,
+			notes: row.notes,
+			accountName: row.account_name,
+		}));
+
+		return results;
 	} catch (error) {
 		console.error('[getTransactions]', error);
 	}
@@ -83,7 +95,7 @@ export const getTransaction = async (transactionId: string) => {
 
 export const updateTransaction = async (
 	transactionId: number,
-	category: CATEGORY,
+	category: string,
 	notes: string | null,
 ) => {
 	try {

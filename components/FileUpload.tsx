@@ -1,6 +1,6 @@
 'use client';
 
-import { UploadIcon, Users } from 'lucide-react';
+import { UploadIcon } from 'lucide-react';
 import { Button } from './ui/button';
 import { uploadTransactions } from '@/lib/actions';
 import { Input } from './ui/input';

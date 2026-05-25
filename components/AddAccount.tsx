@@ -13,7 +13,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from './ui/dialog';
-import { Field, FieldGroup } from './ui/field';
+import { Field } from './ui/field';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
 import {
