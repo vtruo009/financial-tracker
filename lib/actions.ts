@@ -170,8 +170,8 @@ export const getMonthlySummary = async (
 		}
 
 		return {
-			total_income: data[0].total_income,
-			total_spending: data[0].total_spending,
+			total_income: parseFloat(data[0].total_income),
+			total_spending: parseFloat(data[0].total_spending),
 		};
 	} catch (error) {
 		console.error('[getMonthlySummary]:', error);
@@ -206,7 +206,7 @@ export const getSpendingByCategory = async (
 
 		const results: CategorySpendingPayload[] = data.map((row) => ({
 			category: row.category,
-			total_spending: row.total_spending,
+			total_spending: parseFloat(row.total_spending),
 		}));
 		return results;
 	} catch (error) {
@@ -245,7 +245,7 @@ export const getTopMerchant = async (
 
 		const results: TopMerchantPayload[] = data.map((row) => ({
 			merchant: row.merchant,
-			total_spending: row.total_spending,
+			total_spending: parseFloat(row.total_spending),
 		}));
 		return results;
 	} catch (error) {
@@ -280,7 +280,7 @@ export const getMonthlyTrends = async (
 
 		const results: MonthlyTrendPayload[] = data.map((row) => ({
 			month: row.month,
-			total_spending: row.total_spending,
+			total_spending: parseFloat(row.total_spending),
 		}));
 		return results;
 	} catch (error) {

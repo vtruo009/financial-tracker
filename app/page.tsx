@@ -19,6 +19,7 @@ import TransactionRow from '@/components/TransactionRow';
 import AddAccount from '@/components/AddAccount';
 import SummaryCards from '@/components/SummaryCards';
 import DashboardCharts from '@/components/DashboardCharts';
+import Link from 'next/link';
 
 export default async function Home() {
 	// const allTransactions = await getTransactions();
@@ -56,9 +57,9 @@ export default async function Home() {
 		<div className='flex flex-col flex-1 items-center justify-center bg-zinc-50 dark:bg-black'>
 			<main className='flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start'>
 				{/* <FileUpload accounts={accounts} /> */}
+				<Link href='/dashboard'>Dashboard</Link>
 				<AddAccount />
 				<SummaryCards />
-				<DashboardCharts />
 				<h2>Transactions</h2>
 				{/* <div className='border border-gray-200 rounded-sm overflow-hidden'>
 					<Table>

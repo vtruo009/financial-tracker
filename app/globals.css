@@ -19,6 +19,7 @@
 	--color-sidebar-primary: var(--sidebar-primary);
 	--color-sidebar-foreground: var(--sidebar-foreground);
 	--color-sidebar: var(--sidebar);
+	--color-chart-6: var(--chart-6);
 	--color-chart-5: var(--chart-5);
 	--color-chart-4: var(--chart-4);
 	--color-chart-3: var(--chart-3);
@@ -47,6 +48,13 @@
 	--radius-2xl: calc(var(--radius) * 1.8);
 	--radius-3xl: calc(var(--radius) * 2.2);
 	--radius-4xl: calc(var(--radius) * 2.6);
+
+	/* --color-food-drink: var(--category-food-drink);
+	--color-bill: var(--category-bill);
+	--color-travel: var(--category-travel);
+	--color-hobby: var(--category-hobby);
+	--color-necessity: var(--category-necessity);
+	--color-materialistic-desire: var(--category-materialistic-desire); */
 }
 
 :root {
@@ -68,11 +76,17 @@
 	--border: oklch(0.922 0 0);
 	--input: oklch(0.922 0 0);
 	--ring: oklch(0.708 0 0);
-	--chart-1: oklch(0.87 0 0);
+	--chart-1: oklch(87% 0.1 47.43);
+	--chart-2: oklch(70% 0 0);
+	--chart-3: oklch(63.239% 0.16271 261.725);
+	--chart-4: oklch(64.167% 0.17148 297.528);
+	--chart-5: oklch(68.418% 0.18795 23.456);
+	--chart-6: oklch(89% 0.10531 178.236);
+	/* --chart-1: oklch(0.87 0 0);
 	--chart-2: oklch(0.556 0 0);
 	--chart-3: oklch(0.439 0 0);
 	--chart-4: oklch(0.371 0 0);
-	--chart-5: oklch(0.269 0 0);
+	--chart-5: oklch(0.269 0 0); */
 	--radius: 0.625rem;
 	--sidebar: oklch(0.985 0 0);
 	--sidebar-foreground: oklch(0.145 0 0);

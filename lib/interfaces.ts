@@ -74,11 +74,11 @@ export enum BANK_INSTITUTION {
 
 /******************* DATABASE *******************/
 interface SpendingsPayload {
-	total_spending: string;
+	total_spending: number;
 }
 
 export interface MonthlySummaryPayload extends SpendingsPayload {
-	total_income: string;
+	total_income: number;
 }
 
 export interface CategorySpendingPayload extends SpendingsPayload {

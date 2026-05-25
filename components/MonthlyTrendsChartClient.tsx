@@ -10,17 +10,17 @@ import {
 import { MonthlyTrendPayload } from '@/lib/interfaces';
 import { currencyFormatter, dateFormatter } from '@/lib/utils';
 
-interface MonthlyTrendsChartProps {
+interface MonthlyTrendsChartClientProps {
 	data: MonthlyTrendPayload[];
 }
 
-const MonthlyTrendsChartClient = ({ data }: MonthlyTrendsChartProps) => {
-	const config = {
+const MonthlyTrendsChartClient = ({ data }: MonthlyTrendsChartClientProps) => {
+	const config: ChartConfig = {
 		month: {
 			label: 'Desktop',
 			color: '#2563eb',
 		},
-	} satisfies ChartConfig;
+	};
 
 	return (
 		<ChartContainer config={config}>
