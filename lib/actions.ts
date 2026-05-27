@@ -59,11 +59,24 @@ export const uploadTransactions = async (transactions: TransactionInput[]) => {
 export const getTransactions = async (
 	userId: number = 1,
 	category?: string,
+	month?: string,
+	search?: string,
 ): Promise<Transaction[] | undefined> => {
 	try {
 		const data: TransactionPayload[] = (await sql.query(
-			'SELECT transactions.*, accounts.name AS account_name, accounts.type AS account_type FROM transactions JOIN accounts ON transactions.account_id = accounts.id WHERE transactions.user_id = $1 AND (category = $2 OR $2 IS NULL) ORDER BY date DESC',
-			[userId, category],
+			`
+			SELECT transactions.*, accounts.name AS account_name, accounts.type AS account_type
+			FROM transactions
+			JOIN accounts ON transactions.account_id = accounts.id
+			WHERE
+				transactions.user_id = $1 AND
+				(category = $2 OR $2 IS NULL) AND
+				(
+					(TO_CHAR(date, 'YYYY-MM') = $3) OR $3 IS NULL
+				) AND
+				((clean_name ILIKE '%' || $4 || '%') OR $4 IS NULL)
+			ORDER BY date DESC`,
+			[userId, category, month, search],
 		)) as TransactionPayload[];
 
 		const results: Transaction[] = data.map((row) => ({

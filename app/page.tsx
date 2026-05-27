@@ -7,9 +7,15 @@ import TransactionRow from '@/components/TransactionRow';
 import AddAccount from '@/components/AddAccount';
 import SummaryCards from '@/components/SummaryCards';
 import Link from 'next/link';
+import FilterBar from '@/components/FilterBar';
 
-export default async function Home() {
-	const allTransactions = await getTransactions();
+export default async function Home({
+	searchParams,
+}: {
+	searchParams: Promise<{ category?: string; month?: string; search?: string }>;
+}) {
+	const { category, month, search } = await searchParams;
+	const allTransactions = await getTransactions(1, category, month, search);
 
 	const groupedTransactions = allTransactions?.reduce(
 		(acc, transaction) => {
@@ -30,6 +36,7 @@ export default async function Home() {
 				<AddAccount />
 				<SummaryCards />
 				<h2>Transactions</h2>
+				<FilterBar />
 				<div className='border border-gray-200 rounded-sm overflow-hidden'>
 					<Table>
 						<TableBody>
