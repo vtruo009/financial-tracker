@@ -17,6 +17,7 @@ import { useState } from 'react';
 const CategoryFilter = () => {
 	const filterParams = useSearchParams();
 
+	// TODO: refactor to custom hook
 	const selectedCategory = filterParams.get('category') ?? '';
 	const pathname = usePathname();
 	const { replace } = useRouter();
@@ -48,6 +49,64 @@ const CategoryFilter = () => {
 							</DropdownMenuRadioItem>
 						);
 					})}
+				</DropdownMenuRadioGroup>
+			</DropdownMenuContent>
+		</DropdownMenu>
+	);
+};
+
+const DateFilter = () => {
+	const today = new Date();
+	const dateRangeMap: { [key: string]: string } = {
+		'This Month': new Date(today.getFullYear(), today.getMonth(), 1)
+			.toISOString()
+			.split('T')[0],
+		'Last Month': new Date(
+			today.getFullYear(),
+			today.getMonth() - 1,
+			today.getDate(),
+		)
+			.toISOString()
+			.split('T')[0],
+		'Last 3 Months': new Date(
+			today.getFullYear(),
+			today.getMonth() - 3,
+			today.getDate(),
+		)
+			.toISOString()
+			.split('T')[0],
+	};
+
+	const dateParams = useSearchParams();
+	const selectedDate = dateParams.get('startDate') ?? '';
+	const pathname = usePathname();
+	const { replace } = useRouter();
+
+	function handleChange(filter: string) {
+		const params = new URLSearchParams(dateParams);
+		if (selectedDate == filter) {
+			params.delete('startDate');
+		} else {
+			params.set('startDate', filter);
+		}
+		replace(`${pathname}?${params.toString()}`);
+	}
+
+	return (
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<Button variant='outline'>Date Range</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent>
+				<DropdownMenuRadioGroup
+					value={selectedDate}
+					onValueChange={handleChange}
+				>
+					{Object.entries(dateRangeMap).map((entry) => (
+						<DropdownMenuRadioItem key={entry[0]} value={entry[1]}>
+							{entry[0]}
+						</DropdownMenuRadioItem>
+					))}
 				</DropdownMenuRadioGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>
@@ -88,6 +147,7 @@ const FilterBar = () => {
 	return (
 		<>
 			<CategoryFilter />
+			<DateFilter />
 			<Search />
 		</>
 	);

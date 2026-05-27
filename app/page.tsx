@@ -12,10 +12,14 @@ import FilterBar from '@/components/FilterBar';
 export default async function Home({
 	searchParams,
 }: {
-	searchParams: Promise<{ category?: string; month?: string; search?: string }>;
+	searchParams: Promise<{
+		category?: string;
+		startDate?: string;
+		search?: string;
+	}>;
 }) {
-	const { category, month, search } = await searchParams;
-	const allTransactions = await getTransactions(1, category, month, search);
+	const { category, startDate, search } = await searchParams;
+	const allTransactions = await getTransactions(1, category, startDate, search);
 
 	const groupedTransactions = allTransactions?.reduce(
 		(acc, transaction) => {

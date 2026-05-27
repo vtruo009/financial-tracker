@@ -59,7 +59,7 @@ export const uploadTransactions = async (transactions: TransactionInput[]) => {
 export const getTransactions = async (
 	userId: number = 1,
 	category?: string,
-	month?: string,
+	startDate?: string,
 	search?: string,
 ): Promise<Transaction[] | undefined> => {
 	try {
@@ -71,12 +71,10 @@ export const getTransactions = async (
 			WHERE
 				transactions.user_id = $1 AND
 				(category = $2 OR $2 IS NULL) AND
-				(
-					(TO_CHAR(date, 'YYYY-MM') = $3) OR $3 IS NULL
-				) AND
+				((date >= $3) OR $3 IS NULL) AND
 				((clean_name ILIKE '%' || $4 || '%') OR $4 IS NULL)
 			ORDER BY date DESC`,
-			[userId, category, month, search],
+			[userId, category, startDate, search],
 		)) as TransactionPayload[];
 
 		const results: Transaction[] = data.map((row) => ({
