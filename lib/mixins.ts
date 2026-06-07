@@ -1,4 +1,5 @@
 export const DEFAULT_USER_ID = 1;
+export const LIMIT = 10;
 
 // ******************** INTERFACES ********************
 export interface Transaction {
@@ -38,11 +39,6 @@ export interface TransactionPayload {
 	account_name: string;
 	account_type: string;
 }
-
-// export type TransactionInput = Omit<
-// 	TransactionPayload,
-// 	'id' | 'created_at' | 'account_name' | 'account_type'
-// >;
 
 export interface Account {
 	id: number;
@@ -115,4 +111,8 @@ export interface TopMerchantPayload extends SpendingsPayload {
 
 export interface MonthlyTrendPayload extends SpendingsPayload {
 	month: string;
+}
+
+export interface TotalTransactionCount {
+	total_transactions: number;
 }

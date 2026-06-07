@@ -8,6 +8,7 @@ import {
 	MonthlySummaryPayload,
 	MonthlyTrendPayload,
 	TopMerchantPayload,
+	TotalTransactionCount,
 	Transaction,
 	TransactionInput,
 	TransactionPayload,
@@ -57,11 +58,15 @@ export const uploadTransactions = async (transactions: TransactionInput[]) => {
 };
 
 export const getTransactions = async (
-	userId: number = 1,
+	userId: number,
+	page: number = 1,
+	limit: number = 10,
 	category?: string,
 	startDate?: string,
 	search?: string,
 ): Promise<Transaction[] | undefined> => {
+	const offset = (page - 1) * limit;
+
 	try {
 		const data: TransactionPayload[] = (await sql.query(
 			`
@@ -73,8 +78,11 @@ export const getTransactions = async (
 				(category = $2 OR $2 IS NULL) AND
 				((date >= $3) OR $3 IS NULL) AND
 				((clean_name ILIKE '%' || $4 || '%') OR $4 IS NULL)
-			ORDER BY date DESC`,
-			[userId, category, startDate, search],
+			ORDER BY date DESC
+			LIMIT $5
+			OFFSET $6
+			`,
+			[userId, category, startDate, search, limit, offset],
 		)) as TransactionPayload[];
 
 		const results: Transaction[] = data.map((row) => ({
@@ -90,6 +98,37 @@ export const getTransactions = async (
 		return results;
 	} catch (error) {
 		console.error('[getTransactions]', error);
+	}
+};
+
+export const getTransactionCount = async (
+	userId: number,
+	category?: string,
+	startDate?: string,
+	search?: string,
+): Promise<number | undefined> => {
+	try {
+		const data = await sql.query(
+			`
+			SELECT COUNT(*) AS total_transactions
+			FROM transactions
+			WHERE
+			transactions.user_id = $1 AND
+			(category = $2 OR $2 IS NULL) AND
+			((date >= $3) OR $3 IS NULL) AND
+			((clean_name ILIKE '%' || $4 || '%') OR $4 IS NULL)
+			`,
+			[userId, category, startDate, search],
+		);
+
+		if (data.length === 0)
+			throw new Error(
+				`Unable to get total number of transactions for user ${userId}`,
+			);
+
+		return data[0].total_transactions;
+	} catch (error) {
+		console.error('[getTransactionCount]', error);
 	}
 };
 

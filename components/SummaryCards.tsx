@@ -3,7 +3,6 @@ import { Separator } from './ui/separator';
 import { Label } from './ui/label';
 import {
 	getMonthlySummary,
-	getMonthlyTrends,
 	getSpendingByCategory,
 	getTopMerchant,
 } from '@/lib/actions';

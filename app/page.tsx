@@ -1,5 +1,9 @@
-import { getAllAccounts, getTransactions } from '../lib/actions';
-import { Account, Transaction } from '../lib/mixins';
+import {
+	getAllAccounts,
+	getTransactionCount,
+	getTransactions,
+} from '../lib/actions';
+import { Account, DEFAULT_USER_ID, LIMIT, Transaction } from '../lib/mixins';
 import FileUpload from '@/components/FileUpload';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import React from 'react';
@@ -8,6 +12,9 @@ import AddAccount from '@/components/AddAccount';
 import SummaryCards from '@/components/SummaryCards';
 import Link from 'next/link';
 import FilterBar from '@/components/FilterBar';
+import SmartPagination from '@/components/SmartPagination';
+
+const OFFSET = 1;
 
 export default async function Home({
 	searchParams,
@@ -16,10 +23,19 @@ export default async function Home({
 		category?: string;
 		startDate?: string;
 		search?: string;
+		page?: string;
 	}>;
 }) {
-	const { category, startDate, search } = await searchParams;
-	const allTransactions = await getTransactions(1, category, startDate, search);
+	const { category, startDate, search, page } = await searchParams;
+	// Move to page wrappe and searchParams but just for page
+	const allTransactions = await getTransactions(
+		DEFAULT_USER_ID,
+		page ? parseInt(page) : OFFSET,
+		LIMIT,
+		category,
+		startDate,
+		search,
+	);
 
 	const groupedTransactions = allTransactions?.reduce(
 		(acc, transaction) => {
@@ -31,6 +47,9 @@ export default async function Home({
 		{} as Record<string, Transaction[]>,
 	);
 	const accounts = (await getAllAccounts()) as Account[];
+	const totalCount =
+		(await getTransactionCount(DEFAULT_USER_ID, category, startDate, search)) ??
+		0;
 
 	return (
 		<div className='flex flex-col flex-1 items-center justify-center bg-zinc-50 dark:bg-black'>
@@ -38,7 +57,7 @@ export default async function Home({
 				<FileUpload accounts={accounts} />
 				<Link href='/dashboard'>Dashboard</Link>
 				<AddAccount />
-				<SummaryCards />
+				{/* <SummaryCards /> */}
 				<h2>Transactions</h2>
 				<FilterBar />
 				<div className='border border-gray-200 rounded-sm overflow-hidden'>
@@ -63,6 +82,7 @@ export default async function Home({
 						</TableBody>
 					</Table>
 				</div>
+				<SmartPagination totalTransactions={totalCount} />
 			</main>
 		</div>
 	);

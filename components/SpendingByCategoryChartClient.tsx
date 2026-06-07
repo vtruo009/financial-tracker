@@ -1,6 +1,6 @@
 'use client';
 
-import { CATEGORY, CategorySpendingPayload } from '@/lib/mixins';
+import { CategorySpendingPayload } from '@/lib/mixins';
 import {
 	ChartConfig,
 	ChartContainer,
