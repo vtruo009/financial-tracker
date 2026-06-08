@@ -227,13 +227,9 @@ export const getMonthlySummary = async (
 				user_id = ${userId}
 		`;
 
-		if (!data[0].total_income && !data[0].total_spending) {
-			throw new Error('No total returned!');
-		}
-
 		return {
-			total_income: parseFloat(data[0].total_income),
-			total_spending: parseFloat(data[0].total_spending),
+			total_income: parseFloat(data[0].total_income ?? '0'),
+			total_spending: parseFloat(data[0].total_spending ?? '0'),
 		};
 	} catch (error) {
 		console.error('[getMonthlySummary]:', error);
@@ -262,13 +258,9 @@ export const getSpendingByCategory = async (
 			ORDER BY total_spending DESC
 		`;
 
-		if (!data || data.length === 0) {
-			throw new Error('No total returned!');
-		}
-
 		const results: CategorySpendingPayload[] = data.map((row) => ({
-			category: row.category,
-			total_spending: parseFloat(row.total_spending),
+			category: row.category ?? '',
+			total_spending: parseFloat(row.total_spending ?? '0'),
 		}));
 		return results;
 	} catch (error) {
@@ -301,13 +293,9 @@ export const getTopMerchant = async (
 			LIMIT ${limit}
 		`;
 
-		if (!data || data.length === 0) {
-			throw new Error('No total returned!');
-		}
-
 		const results: TopMerchantPayload[] = data.map((row) => ({
-			merchant: row.merchant,
-			total_spending: parseFloat(row.total_spending),
+			merchant: row.merchant ?? '',
+			total_spending: parseFloat(row.total_spending ?? '0'),
 		}));
 		return results;
 	} catch (error) {
@@ -336,13 +324,13 @@ export const getMonthlyTrends = async (
 			ORDER BY month ASC;
 		`;
 
-		if (!data || data.length === 0) {
-			throw new Error('No total returned!');
-		}
+		// if (!data || data.length === 0) {
+		// 	throw new Error('No total returned!');
+		// }
 
 		const results: MonthlyTrendPayload[] = data.map((row) => ({
-			month: row.month,
-			total_spending: parseFloat(row.total_spending),
+			month: row.month ?? '',
+			total_spending: parseFloat(row.total_spending ?? '0'),
 		}));
 		return results;
 	} catch (error) {

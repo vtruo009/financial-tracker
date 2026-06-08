@@ -57,7 +57,7 @@ export default async function Home({
 				<FileUpload accounts={accounts} />
 				<Link href='/dashboard'>Dashboard</Link>
 				<AddAccount />
-				{/* <SummaryCards /> */}
+				<SummaryCards />
 				<h2>Transactions</h2>
 				<FilterBar />
 				<div className='border border-gray-200 rounded-sm overflow-hidden'>
