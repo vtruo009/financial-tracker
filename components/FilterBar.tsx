@@ -9,27 +9,21 @@ import {
 	DropdownMenuRadioItem,
 	DropdownMenuTrigger,
 } from './ui/dropdown-menu';
-import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { Field } from './ui/field';
 import { Input } from './ui/input';
 import { useState } from 'react';
+import useFilterParams from '@/lib/hooks';
 
 const CategoryFilter = () => {
-	const filterParams = useSearchParams();
-
-	// TODO: refactor to custom hook
-	const selectedCategory = filterParams.get('category') ?? '';
-	const pathname = usePathname();
-	const { replace } = useRouter();
+	const { searchParams, setParams, deleteParams } = useFilterParams();
+	const selectedCategory = searchParams.get('category') ?? '';
 
 	function handleChange(filter: string) {
-		const params = new URLSearchParams(filterParams);
 		if (selectedCategory == filter) {
-			params.delete('category');
+			deleteParams('category');
 		} else {
-			params.set('category', filter);
+			setParams('category', filter);
 		}
-		replace(`${pathname}?${params.toString()}`);
 	}
 
 	return (
@@ -77,19 +71,15 @@ const DateFilter = () => {
 			.split('T')[0],
 	};
 
-	const dateParams = useSearchParams();
-	const selectedDate = dateParams.get('startDate') ?? '';
-	const pathname = usePathname();
-	const { replace } = useRouter();
+	const { searchParams, setParams, deleteParams } = useFilterParams();
+	const selectedDate = searchParams.get('startDate') ?? '';
 
 	function handleChange(filter: string) {
-		const params = new URLSearchParams(dateParams);
 		if (selectedDate == filter) {
-			params.delete('startDate');
+			deleteParams('startDate');
 		} else {
-			params.set('startDate', filter);
+			setParams('startDate', filter);
 		}
-		replace(`${pathname}?${params.toString()}`);
 	}
 
 	return (
@@ -114,21 +104,17 @@ const DateFilter = () => {
 };
 
 const Search = () => {
-	const searchParams = useSearchParams();
+	const { searchParams, setParams, deleteParams } = useFilterParams();
 	const [searchTerm, setSearchTerm] = useState(
 		searchParams.get('search') ?? '',
 	);
-	const pathname = usePathname();
-	const { replace } = useRouter();
 
-	const handleClick = (term: string) => {
-		const params = new URLSearchParams(searchParams);
-		if (term) {
-			params.set('search', term);
+	const handleClick = (searchTerm: string) => {
+		if (searchTerm) {
+			setParams('search', searchTerm);
 		} else {
-			params.delete('search');
+			deleteParams('search');
 		}
-		replace(`${pathname}?${params.toString()}`);
 	};
 
 	return (
