@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Nunito } from 'next/font/google';
 import './globals.css';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import AppSidebar from '@/components/AppSidebar';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -29,8 +31,17 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang='en' className={`${nunito.variable} h-full antialiased`}>
-			<body className='min-h-full flex flex-col'>{children}</body>
-		</html>
+		<SidebarProvider defaultOpen={true}>
+			<AppSidebar />
+			<html lang='en' className={`${nunito.variable} antialiased`}>
+				<body>
+					<header>{/* nav bar */}</header>
+					<main className='flex h-screen'>
+						<SidebarTrigger />
+						{children}
+					</main>
+				</body>
+			</html>
+		</SidebarProvider>
 	);
 }

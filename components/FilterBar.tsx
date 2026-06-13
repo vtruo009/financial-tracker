@@ -124,7 +124,9 @@ const Search = () => {
 				value={searchTerm}
 				onChange={(e) => setSearchTerm(e.target.value)}
 			/>
-			<Button onClick={() => handleClick(searchTerm)}>Search</Button>
+			<Button className='font-semibold' onClick={() => handleClick(searchTerm)}>
+				Search
+			</Button>
 		</Field>
 	);
 };
