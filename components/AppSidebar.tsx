@@ -19,12 +19,14 @@ const AppSidebar = () => {
 
 	return (
 		<Sidebar>
-			<SidebarHeader className='flex flex-row items-center gap-3'>
-				<Image src='/parsley.png' alt='brand logo' width={64} height={64} />
-				<span className='font-semibold text-2xl'>Parsley</span>
+			<SidebarHeader className='pl-6 py-6'>
+				<div className='flex items-center gap-1'>
+					<Image src='/parsley.png' alt='brand logo' width={45} height={45} />
+					<span className='font-bold text-4xl'>Parsley</span>
+				</div>
 			</SidebarHeader>
 			<SidebarContent>
-				<SidebarMenu className='pl-3'>
+				<SidebarMenu className='pl-6'>
 					<SidebarMenuItem className='py-1'>
 						<SidebarMenuButton
 							asChild
@@ -33,7 +35,7 @@ const AppSidebar = () => {
 						>
 							<Link href='/'>
 								<Table />
-								<span>Activity</span>
+								<span className='text-base'>Activity</span>
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
@@ -41,7 +43,7 @@ const AppSidebar = () => {
 						<SidebarMenuButton asChild isActive={pathname == '/dashboard'}>
 							<Link href='/dashboard'>
 								<LayoutDashboardIcon />
-								<span>Dashboard</span>
+								<span className='text-base'>Dashboard</span>
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>

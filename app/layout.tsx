@@ -37,7 +37,7 @@ export default function RootLayout({
 				<body>
 					<header>{/* nav bar */}</header>
 					<main className='flex h-screen'>
-						<SidebarTrigger />
+						<SidebarTrigger className='lg:hidden' />
 						{children}
 					</main>
 				</body>
