@@ -41,11 +41,8 @@ const TransactionRow = ({
 		<Dialog>
 			<DialogTrigger asChild>
 				<TableRow className='border-0 cursor-pointer'>
-					<TableCell>
+					<TableCell className='flex w-full gap-3'>
 						<CategorySymbol category={selectedCategory} />
-					</TableCell>
-
-					<TableCell>
 						<div className='flex flex-col flex-1'>
 							<p className='text-left text-lg font-semibold'>{cleanName}</p>
 							<CategorySelect

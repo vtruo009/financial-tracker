@@ -52,38 +52,37 @@ export default async function Home({
 		0;
 
 	return (
-		<div className='flex flex-col flex-1 items-center justify-center bg-zinc-50 dark:bg-black'>
-			<main className='flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start'>
-				<FileUpload accounts={accounts} />
-				<Link href='/dashboard'>Dashboard</Link>
-				<AddAccount />
-				<SummaryCards />
-				<h2>Transactions</h2>
-				<FilterBar />
-				<div className='border border-gray-200 rounded-sm overflow-hidden'>
-					<Table>
-						<TableBody>
-							{groupedTransactions &&
-								Object.entries(groupedTransactions).map(
-									(entry: [string, Transaction[]]) => (
-										<React.Fragment key={entry[0]}>
-											<TableRow
-												key={entry[0]}
-												className='h-10 hover:bg-transparent'
-											>
-												<TableCell colSpan={3}>{entry[0]}</TableCell>
-											</TableRow>
-											{entry[1].map((transaction) => (
-												<TransactionRow key={transaction.id} {...transaction} />
-											))}
-										</React.Fragment>
-									),
-								)}
-						</TableBody>
-					</Table>
-				</div>
-				<SmartPagination totalTransactions={totalCount} />
-			</main>
-		</div>
+		// <div className='flex flex-col flex-1 items-center justify-center bg-zinc-50 dark:bg-black'>
+		// <main className='flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start'>
+		<>
+			<FileUpload accounts={accounts} />
+			{/* Need to have accounts in a context*/}
+			<SummaryCards />
+			<h2 className='text-2xl font-bold'>Transactions</h2>
+			<FilterBar />
+			<div className='w-full border border-gray-200 rounded-sm overflow-hidden'>
+				<Table>
+					<TableBody>
+						{groupedTransactions &&
+							Object.entries(groupedTransactions).map(
+								(entry: [string, Transaction[]]) => (
+									<React.Fragment key={entry[0]}>
+										<TableRow
+											key={entry[0]}
+											className='h-10 hover:bg-transparent'
+										>
+											<TableCell colSpan={3}>{entry[0]}</TableCell>
+										</TableRow>
+										{entry[1].map((transaction) => (
+											<TransactionRow key={transaction.id} {...transaction} />
+										))}
+									</React.Fragment>
+								),
+							)}
+					</TableBody>
+				</Table>
+			</div>
+			<SmartPagination totalTransactions={totalCount} />
+		</>
 	);
 }

@@ -76,11 +76,11 @@ const TopMerchantsCard = async () => {
 
 const SummaryCards = async () => {
 	return (
-		<>
+		<div className='flex w-full gap-3 py-5'>
 			<MonthlySummaryCard />
 			<CategorySpendingsCard />
 			<TopMerchantsCard />
-		</>
+		</div>
 	);
 };
 

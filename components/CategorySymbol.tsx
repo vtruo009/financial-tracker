@@ -1,9 +1,8 @@
-import { CATEGORY } from '@/lib/mixins';
 import {
 	BalloonIcon,
-	HamburgerIcon,
+	CarFrontIcon,
 	LucideProps,
-	PlaneIcon,
+	PizzaIcon,
 	ReceiptIcon,
 	ShoppingBagIcon,
 	WrenchIcon,
@@ -11,19 +10,19 @@ import {
 import { JSX } from 'react';
 
 const categoryColors: Record<string, string> = {
-	'Food & Drink': 'oklch(87% 0.1 47.43)',
-	Bill: 'oklch(70% 0 0)',
-	Travel: 'oklch(63.239% 0.16271 261.725)',
-	Hobby: 'oklch(64.167% 0.17148 297.528)',
-	Necessity: 'oklch(68.418% 0.18795 23.456)',
-	'Materialistic Desire': 'oklch(89% 0.10531 178.236)',
+	'Food & Drink': '#ffefe0',
+	Bill: '#e9e9e9',
+	Travel: '#e6f0ff',
+	Hobby: '#e6fdff',
+	Necessity: '#ffe1e1',
+	'Materialistic Desire': '#f7f0ff',
 };
 
 const getCategoryIcon = (category: string, otherProps?: LucideProps) => {
 	const icons: Record<string, JSX.Element> = {
-		'Food & Drink': <HamburgerIcon {...otherProps} />,
+		'Food & Drink': <PizzaIcon {...otherProps} />,
 		Bill: <ReceiptIcon {...otherProps} />,
-		Travel: <PlaneIcon {...otherProps} />,
+		Travel: <CarFrontIcon {...otherProps} />,
 		Hobby: <BalloonIcon {...otherProps} />,
 		Necessity: <WrenchIcon {...otherProps} />,
 		'Materialistic Desire': <ShoppingBagIcon {...otherProps} />,
@@ -35,10 +34,14 @@ const getCategoryIcon = (category: string, otherProps?: LucideProps) => {
 const CategorySymbol = ({ category }: { category: string }) => {
 	return (
 		<div
-			className='w-8 h-8 rounded-full flex items-center justify-center'
+			className='w-10 h-10 rounded-full flex items-center justify-center'
 			style={{ backgroundColor: categoryColors[category] }}
 		>
-			{getCategoryIcon(category, { size: 20 })}
+			{getCategoryIcon(category, {
+				height: 25,
+				width: 25,
+				strokeWidth: 1.5,
+			})}
 		</div>
 	);
 };

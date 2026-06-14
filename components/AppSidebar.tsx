@@ -1,6 +1,6 @@
 'use client';
 
-import { LayoutDashboardIcon, Table } from 'lucide-react';
+import { LayoutDashboardIcon, Table, WalletCardsIcon } from 'lucide-react';
 import {
 	Sidebar,
 	SidebarContent,
@@ -40,10 +40,26 @@ const AppSidebar = () => {
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 					<SidebarMenuItem className='py-1'>
-						<SidebarMenuButton asChild isActive={pathname == '/dashboard'}>
+						<SidebarMenuButton
+							asChild
+							isActive={pathname == '/dashboard'}
+							className='bg-transparent! rounded-none data-[active=true]:border-r-3 data-[active=true]:border-r-sidebar-accent-foreground'
+						>
 							<Link href='/dashboard'>
 								<LayoutDashboardIcon />
 								<span className='text-base'>Dashboard</span>
+							</Link>
+						</SidebarMenuButton>
+					</SidebarMenuItem>
+					<SidebarMenuItem className='py-1'>
+						<SidebarMenuButton
+							asChild
+							isActive={pathname == '/accounts'}
+							className='bg-transparent! rounded-none data-[active=true]:border-r-3 data-[active=true]:border-r-sidebar-accent-foreground'
+						>
+							<Link href='/accounts'>
+								<WalletCardsIcon />
+								<span className='text-base'>Accounts</span>
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>

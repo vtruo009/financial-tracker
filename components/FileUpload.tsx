@@ -41,7 +41,10 @@ const FileUpload = ({ accounts }: FileUploadProps) => {
 	return (
 		<Popover open={isOpen} onOpenChange={handleOpenChange}>
 			<PopoverTrigger asChild>
-				<Button className='cursor-pointer'>
+				<Button
+					size='lg'
+					className='cursor-pointer font-bold focus-visible:ring-0 border-0'
+				>
 					<UploadIcon />
 					Upload CSV
 				</Button>

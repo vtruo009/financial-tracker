@@ -43,7 +43,7 @@ const AddAccount = () => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant='outline' className='cursor-pointer'>
+				<Button variant='ghost' className='cursor-pointer font-bold'>
 					<PlusIcon />
 					Add Account
 				</Button>

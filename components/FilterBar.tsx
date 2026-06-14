@@ -13,6 +13,7 @@ import { Field } from './ui/field';
 import { Input } from './ui/input';
 import { useState } from 'react';
 import useFilterParams from '@/lib/hooks';
+import { SearchIcon } from 'lucide-react';
 
 const CategoryFilter = () => {
 	const { searchParams, setParams, deleteParams } = useFilterParams();
@@ -29,7 +30,9 @@ const CategoryFilter = () => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild className='focus-visible:ring-0'>
-				<Button variant='outline'>Category</Button>
+				<Button variant='outline' size='lg'>
+					{selectedCategory != '' ? selectedCategory : 'Category'}
+				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<DropdownMenuRadioGroup
@@ -85,7 +88,9 @@ const DateFilter = () => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant='outline'>Date Range</Button>
+				<Button variant='outline' size='lg'>
+					{selectedDate != '' ? selectedDate : 'Date Range'}
+				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<DropdownMenuRadioGroup
@@ -122,9 +127,15 @@ const Search = () => {
 			<Input
 				type='search'
 				value={searchTerm}
+				className='h-9 focus-visible:ring-0'
 				onChange={(e) => setSearchTerm(e.target.value)}
 			/>
-			<Button className='font-bold' onClick={() => handleClick(searchTerm)}>
+			<Button
+				size='lg'
+				className='cursor-pointer font-bold'
+				onClick={() => handleClick(searchTerm)}
+			>
+				<SearchIcon />
 				Search
 			</Button>
 		</Field>
@@ -133,11 +144,11 @@ const Search = () => {
 
 const FilterBar = () => {
 	return (
-		<>
-			<CategoryFilter />
+		<div className='flex gap-2 w-full py-2'>
 			<DateFilter />
+			<CategoryFilter />
 			<Search />
-		</>
+		</div>
 	);
 };
 
