@@ -54,8 +54,10 @@ export default async function Home({
 	return (
 		// <div className='flex flex-col flex-1 items-center justify-center bg-zinc-50 dark:bg-black'>
 		// <main className='flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start'>
-		<>
-			<FileUpload accounts={accounts} />
+		<section className='py-8 px-16'>
+			<span className='float-right'>
+				<FileUpload accounts={accounts} />
+			</span>
 			{/* Need to have accounts in a context*/}
 			<SummaryCards />
 			<h2 className='text-2xl font-bold'>Transactions</h2>
@@ -83,6 +85,6 @@ export default async function Home({
 				</Table>
 			</div>
 			<SmartPagination totalTransactions={totalCount} />
-		</>
+		</section>
 	);
 }

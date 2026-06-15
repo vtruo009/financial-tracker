@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Nunito } from 'next/font/google';
 import './globals.css';
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import {
+	SidebarInset,
+	SidebarProvider,
+	SidebarTrigger,
+} from '@/components/ui/sidebar';
 import AppSidebar from '@/components/AppSidebar';
 
 const geistSans = Geist({
@@ -31,17 +35,20 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<SidebarProvider defaultOpen={true}>
-			<AppSidebar />
-			<html lang='en' className={`${nunito.variable} antialiased`}>
-				<body>
-					<header>{/* nav bar */}</header>
-					<main className='flex flex-1 w-full flex-col items-center justify-between py-32 px-16 m-auto bg-white dark:bg-black sm:items-start'>
-						<SidebarTrigger className='lg:hidden' />
-						{children}
-					</main>
-				</body>
-			</html>
-		</SidebarProvider>
+		<html lang='en' className={`${nunito.variable} antialiased`}>
+			<body>
+				<SidebarProvider defaultOpen={true}>
+					<AppSidebar />
+					<SidebarInset>
+						<header className='flex items-center justify-between px-6 py-4 border-b'>
+							<SidebarTrigger className='lg:hidden' />
+							<h2 className='ml-auto'>Van Truong</h2>
+						</header>
+						{/* <main className='flex flex-1 w-full flex-col items-center justify-between m-auto bg-white dark:bg-black sm:items-start'> */}
+						<main className='flex-1 overflow-auto'>{children}</main>
+					</SidebarInset>
+				</SidebarProvider>
+			</body>
+		</html>
 	);
 }
