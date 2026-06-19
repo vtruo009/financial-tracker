@@ -6,7 +6,7 @@ import {
 	ChartContainer,
 	ChartTooltip,
 	ChartTooltipContent,
-} from './ui/chart';
+} from '../ui/chart';
 import { MonthlyTrendPayload } from '@/lib/mixins';
 import { currencyFormatter, dateFormatter } from '@/lib/utils';
 
@@ -23,7 +23,7 @@ const MonthlyTrendsChartClient = ({ data }: MonthlyTrendsChartClientProps) => {
 	};
 
 	return (
-		<ChartContainer config={config}>
+		<ChartContainer config={config} className='min-h-50 w-full h-50'>
 			<LineChart
 				accessibilityLayer
 				data={data}
@@ -48,15 +48,23 @@ const MonthlyTrendsChartClient = ({ data }: MonthlyTrendsChartClientProps) => {
 				/>
 				<ChartTooltip
 					cursor={false}
-					content={<ChartTooltipContent hideLabel />}
+					content={<ChartTooltipContent hideLabel className='min-w-45' />}
 				/>
 				<Line
 					dataKey='total_spending'
 					type='linear'
-					stroke='var(--color-month)'
+					stroke='var(--color-spending)'
 					strokeWidth={2}
 					dot={false}
 					name='Total Spending'
+				/>
+				<Line
+					dataKey='total_income'
+					type='linear'
+					stroke='var(--color-income)'
+					strokeWidth={2}
+					dot={false}
+					name='Total Income'
 				/>
 			</LineChart>
 		</ChartContainer>

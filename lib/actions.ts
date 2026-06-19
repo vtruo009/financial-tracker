@@ -314,23 +314,20 @@ export const getMonthlyTrends = async (
 		const data = await sql`
 			SELECT 
 				DATE_TRUNC('month', date) as month,
-				SUM(CASE WHEN amount < 0 THEN ABS(amount) ELSE 0 END) as total_spending
+				SUM(CASE WHEN amount < 0 THEN ABS(amount) ELSE 0 END) as total_spending,
+				SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) as total_income
 			FROM transactions 
 			WHERE
 				(date >= DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '6 month') AND
-				(amount < 0) AND
 				(user_id = ${userId})
 			GROUP BY month
 			ORDER BY month ASC;
 		`;
 
-		// if (!data || data.length === 0) {
-		// 	throw new Error('No total returned!');
-		// }
-
 		const results: MonthlyTrendPayload[] = data.map((row) => ({
 			month: row.month ?? '',
 			total_spending: parseFloat(row.total_spending ?? '0'),
+			total_income: parseFloat(row.total_income ?? '0'),
 		}));
 		return results;
 	} catch (error) {

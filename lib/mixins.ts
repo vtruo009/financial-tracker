@@ -111,6 +111,7 @@ export interface TopMerchantPayload extends SpendingsPayload {
 
 export interface MonthlyTrendPayload extends SpendingsPayload {
 	month: string;
+	total_income: number;
 }
 
 export interface TotalTransactionCount {
