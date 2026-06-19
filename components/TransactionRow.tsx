@@ -40,8 +40,8 @@ const TransactionRow = ({
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<TableRow className='border-0 cursor-pointer'>
-					<TableCell className='flex w-full gap-3'>
+				<TableRow className='border-0 cursor-pointer h-fit'>
+					<TableCell className='flex gap-3 pl-3 h-18'>
 						<CategorySymbol category={selectedCategory} />
 						<div className='flex flex-col flex-1'>
 							<p className='text-left text-lg font-semibold'>{cleanName}</p>
@@ -54,8 +54,10 @@ const TransactionRow = ({
 						</div>
 					</TableCell>
 
-					<TableCell className='content-start'>
-						<p className='font-bold text-lg text-right'>
+					<TableCell className='content-start pr-3 h-18'>
+						<p
+							className={`font-bold text-lg text-right ${amount > 0 ? 'text-income' : ''}`}
+						>
 							{currencyFormatter.format(amount)}
 						</p>
 					</TableCell>

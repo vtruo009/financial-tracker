@@ -33,7 +33,7 @@ const CategorySelect = ({
 		>
 			<SelectTrigger
 				size='sm'
-				className='border-0 focus-visible:ring-0 p-0 items-start text-muted-foreground'
+				className='border-0 focus-visible:ring-0 p-0 items-center text-muted-foreground h-auto!'
 			>
 				<SelectValue placeholder={selectedCategory} />
 			</SelectTrigger>

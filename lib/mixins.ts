@@ -77,7 +77,7 @@ export enum CATEGORY {
 	TRAVEL = 'Travel',
 	BILL = 'Bill',
 	NECESSITY = 'Necessity',
-	MISC = 'Miscelaneous',
+	MISC = 'Miscellaneous',
 }
 
 export enum ACCOUNT_TYPE {

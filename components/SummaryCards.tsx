@@ -14,17 +14,28 @@ const MonthlySummaryCard = async () => {
 
 	if (!monthlySummary) return <p>Unable to fetch monthly summary</p>;
 
+	const percentage =
+		monthlySummary.total_spending / monthlySummary.total_income;
+
 	return (
 		<Card className='mx-auto w-full'>
 			<CardHeader>
-				<CardTitle>Montly Summary</CardTitle>
+				<CardTitle className='font-bold'>Monthly Summary</CardTitle>
 			</CardHeader>
-			<CardContent>
-				<Label>Total Income</Label>
-				<p>{currencyFormatter.format(monthlySummary.total_income)}</p>
-				<Separator orientation='vertical' />
-				<Label>Total Spending</Label>
-				<p>{currencyFormatter.format(monthlySummary.total_spending)}</p>
+			<CardContent className='flex justify-evenly'>
+				<div className='flex flex-col items-center'>
+					<p className='text-3xl text-income'>
+						{currencyFormatter.format(monthlySummary.total_income)}
+					</p>
+					<p className='font-semibold'>Total Income</p>
+				</div>
+				<Separator orientation='vertical' className='h-12 w-0.5!' />
+				<div className='flex flex-col items-center'>
+					<p className={`text-3xl ${percentage > 0.85 ? 'text-spending' : ''}`}>
+						{currencyFormatter.format(monthlySummary.total_spending)}
+					</p>
+					<p className='font-semibold'>Total Spending</p>
+				</div>
 			</CardContent>
 		</Card>
 	);
@@ -38,7 +49,9 @@ const CategorySpendingsCard = async () => {
 	return (
 		<Card className='mx-auto w-full'>
 			<CardHeader>
-				<CardTitle>Total Spending in each Category</CardTitle>
+				<CardTitle className='font-bold'>
+					Total Spending in each Category
+				</CardTitle>
 			</CardHeader>
 			<CardContent>
 				{categorySpendings.map((spending) => (
@@ -60,7 +73,7 @@ const TopMerchantsCard = async () => {
 	return (
 		<Card className='mx-auto w-full'>
 			<CardHeader>
-				<CardTitle>Spendings on Top Merchants</CardTitle>
+				<CardTitle className='font-bold'>Spendings on Top Merchants</CardTitle>
 			</CardHeader>
 			<CardContent>
 				{topMerchants.map((merchant) => (

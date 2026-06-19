@@ -20,10 +20,10 @@ const AppSidebar = () => {
 	return (
 		<Sidebar>
 			<SidebarHeader className='pl-6 py-6'>
-				<div className='flex items-center gap-1'>
+				<Link href='/' className='flex items-center gap-1'>
 					<Image src='/parsley.png' alt='brand logo' width={45} height={45} />
 					<span className='font-bold text-4xl'>Parsley</span>
-				</div>
+				</Link>
 			</SidebarHeader>
 			<SidebarContent>
 				<SidebarMenu className='pl-6'>

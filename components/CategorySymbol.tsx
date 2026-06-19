@@ -1,6 +1,7 @@
 import {
 	BalloonIcon,
 	CarFrontIcon,
+	FolderIcon,
 	LucideProps,
 	PizzaIcon,
 	ReceiptIcon,
@@ -11,11 +12,12 @@ import { JSX } from 'react';
 
 const categoryColors: Record<string, string> = {
 	'Food & Drink': '#ffefe0',
-	Bill: '#e9e9e9',
+	Bill: '#fff9d9',
 	Travel: '#e6f0ff',
 	Hobby: '#e6fdff',
 	Necessity: '#ffe1e1',
 	'Materialistic Desire': '#f7f0ff',
+	Miscellaneous: '#e9e9e9',
 };
 
 const getCategoryIcon = (category: string, otherProps?: LucideProps) => {
@@ -26,6 +28,7 @@ const getCategoryIcon = (category: string, otherProps?: LucideProps) => {
 		Hobby: <BalloonIcon {...otherProps} />,
 		Necessity: <WrenchIcon {...otherProps} />,
 		'Materialistic Desire': <ShoppingBagIcon {...otherProps} />,
+		Miscellaneous: <FolderIcon {...otherProps} />,
 	};
 
 	return icons[category];
