@@ -1,5 +1,5 @@
-import MonthlyTrendsChart from '@/components/charts/MonthlyTrends';
-import SpendingByCategoryChart from '@/components/charts/SpendingByCategory';
+import MonthlyTrendsChart from '@/components/charts/MonthlyTrendsChart';
+import SpendingByCategoryChart from '@/components/charts/SpendingByCategoryChart';
 
 const Dashboard = () => {
 	return (

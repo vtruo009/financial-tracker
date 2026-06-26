@@ -1,6 +1,6 @@
 import { getSpendingByCategory } from '@/lib/actions';
 import { DEFAULT_USER_ID } from '@/lib/mixins';
-import SpendingByCategoryChartClient from './SpendingByCategoryClient';
+import SpendingByCategoryChartClient from './SpendingByCategoryChartClient';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
 
 const SpendingByCategoryChart = async () => {

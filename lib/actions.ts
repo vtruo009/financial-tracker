@@ -207,7 +207,7 @@ export const getAllAccounts = async (userId: number = 1) => {
 	}
 };
 
-/******************************** AGGREATION ********************************/
+/******************************** AGGREGATION ********************************/
 /**
  * returns total spent and total income for the current month
  * @param userId
@@ -304,7 +304,7 @@ export const getTopMerchant = async (
 };
 
 /**
- * Returns total spent per month for the last 6 months
+ * Returns total spent and income per month for the last 6 months
  * @param userId
  */
 export const getMonthlyTrends = async (

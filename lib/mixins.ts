@@ -71,12 +71,19 @@ export interface ChaseCSV {
 
 /******************** ENUMS ********************/
 export enum CATEGORY {
-	FOODS_DRINK = 'Food & Drink',
-	MATERIALIST_DESIRE = 'Materialistic Desire',
-	HOBBY = 'Hobby',
-	TRAVEL = 'Travel',
-	BILL = 'Bill',
-	NECESSITY = 'Necessity',
+	HOUSING = 'Housing', // rent, utils, internet
+	DINING = 'Dining', // food, boba, starbucks
+	GROCERIES = 'Groceries',
+	TRANSPORTATION = 'Transportation', // gas, charging, fares
+	HEALTH_WELLBEING = 'Health & Wellbeing', // skin care, haircut, target, copays, curology
+	// HOBBY = 'Hobby',
+	MATERIALIST_DESIRE = 'Materialistic Desire', // hobby, Legos, fishing gears
+	TRAVEL = 'Travel', // vacations, flying to other places
+	// FOODS_DRINK = 'Food & Drink',
+	// BILL = 'Bill',
+	// NECESSITY = 'Necessity',
+	CREDIT_CARD_PAYMENT = 'Credit Card Payment',
+	DEBT_PAYMENT = 'Debt Payment',
 	MISC = 'Miscellaneous',
 }
 

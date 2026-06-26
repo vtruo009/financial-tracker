@@ -1,7 +1,7 @@
 import { getMonthlyTrends } from '@/lib/actions';
 import { DEFAULT_USER_ID } from '@/lib/mixins';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
-import MonthlyTrendsChartClient from './MonthlyTrendsClient';
+import MonthlyTrendsChartClient from './MonthlyTrendsChartClient';
 
 const MonthlyTrendsChart = async () => {
 	const data = await getMonthlyTrends(DEFAULT_USER_ID);

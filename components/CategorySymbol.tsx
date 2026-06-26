@@ -1,33 +1,43 @@
 import {
+	AppleIcon,
 	BalloonIcon,
+	BicepsFlexedIcon,
 	CarFrontIcon,
+	CreditCardIcon,
 	FolderIcon,
+	LandmarkIcon,
 	LucideProps,
 	PizzaIcon,
 	ReceiptIcon,
 	ShoppingBagIcon,
+	TreePalmIcon,
 	WrenchIcon,
 } from 'lucide-react';
 import { JSX } from 'react';
 
 const categoryColors: Record<string, string> = {
-	'Food & Drink': '#ffefe0',
-	Bill: '#fff9d9',
-	Travel: '#e6f0ff',
-	Hobby: '#e6fdff',
-	Necessity: '#ffe1e1',
+	Housing: '#fff9d9',
+	Dining: '#ffefe0',
+	'Health & Wellbeing': '#e6fdff',
+	Groceries: '#ffe1e1',
+	Transportation: '#e6f0ff',
+	Travel: '#ffeaff',
 	'Materialistic Desire': '#f7f0ff',
+	'Credit Card Payment': '#e9e9e9',
+	'Debt Payment': '#e9e9e9',
 	Miscellaneous: '#e9e9e9',
 };
 
 const getCategoryIcon = (category: string, otherProps?: LucideProps) => {
 	const icons: Record<string, JSX.Element> = {
-		'Food & Drink': <PizzaIcon {...otherProps} />,
-		Bill: <ReceiptIcon {...otherProps} />,
-		Travel: <CarFrontIcon {...otherProps} />,
-		Hobby: <BalloonIcon {...otherProps} />,
-		Necessity: <WrenchIcon {...otherProps} />,
+		Dining: <PizzaIcon {...otherProps} />,
+		'Health & Wellbeing': <BicepsFlexedIcon {...otherProps} />,
+		Transportation: <CarFrontIcon {...otherProps} />,
+		Travel: <TreePalmIcon {...otherProps} />,
+		Groceries: <AppleIcon {...otherProps} />,
 		'Materialistic Desire': <ShoppingBagIcon {...otherProps} />,
+		'Credit Card Payment': <CreditCardIcon {...otherProps} />,
+		'Debt Payment': <LandmarkIcon {...otherProps} />,
 		Miscellaneous: <FolderIcon {...otherProps} />,
 	};
 
