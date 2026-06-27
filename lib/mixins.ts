@@ -76,16 +76,17 @@ export enum CATEGORY {
 	GROCERIES = 'Groceries',
 	TRANSPORTATION = 'Transportation', // gas, charging, fares
 	HEALTH_WELLBEING = 'Health & Wellbeing', // skin care, haircut, target, copays, curology
-	// HOBBY = 'Hobby',
 	MATERIALIST_DESIRE = 'Materialistic Desire', // hobby, Legos, fishing gears
 	TRAVEL = 'Travel', // vacations, flying to other places
-	// FOODS_DRINK = 'Food & Drink',
-	// BILL = 'Bill',
-	// NECESSITY = 'Necessity',
 	CREDIT_CARD_PAYMENT = 'Credit Card Payment',
 	DEBT_PAYMENT = 'Debt Payment',
 	MISC = 'Miscellaneous',
 }
+
+export const EXCLUDED_CATEGORIES = [
+	CATEGORY.CREDIT_CARD_PAYMENT,
+	CATEGORY.DEBT_PAYMENT,
+];
 
 export enum ACCOUNT_TYPE {
 	CHECKING = 'checking',

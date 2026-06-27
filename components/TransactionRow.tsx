@@ -1,6 +1,6 @@
 'use client';
 
-import { Transaction } from '@/lib/mixins';
+import { EXCLUDED_CATEGORIES, Transaction } from '@/lib/mixins';
 import CategorySymbol from './CategorySymbol';
 import { TableCell, TableRow } from './ui/table';
 import {
@@ -40,7 +40,9 @@ const TransactionRow = ({
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<TableRow className='border-0 cursor-pointer h-fit'>
+				<TableRow
+					className={`border-0 cursor-pointer h-fit ${EXCLUDED_CATEGORIES.includes(category) ? 'opacity-50' : ''}`}
+				>
 					<TableCell className='flex gap-3 pl-3 h-18'>
 						<CategorySymbol category={selectedCategory} />
 						<div className='flex flex-col flex-1'>

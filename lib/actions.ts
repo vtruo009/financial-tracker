@@ -224,6 +224,7 @@ export const getMonthlySummary = async (
 			WHERE
 				EXTRACT(month FROM date) = EXTRACT(month FROM CURRENT_DATE) AND
 				EXTRACT(year from date) = EXTRACT(year from CURRENT_DATE) AND
+				category NOT IN ('Credit Card Payment', 'Debt Payment') AND
 				user_id = ${userId}
 		`;
 
@@ -252,6 +253,7 @@ export const getSpendingByCategory = async (
 			WHERE
 				EXTRACT(month FROM date) = EXTRACT(month FROM CURRENT_DATE) AND
 				EXTRACT(year from date) = EXTRACT(year from CURRENT_DATE) AND
+				category NOT IN ('Credit Card Payment', 'Debt Payment') AND
 				amount < 0 AND
 				user_id = ${userId}
 			GROUP BY category
@@ -286,6 +288,7 @@ export const getTopMerchant = async (
 			WHERE
 				EXTRACT(month FROM date) = EXTRACT(month FROM CURRENT_DATE) AND
 				EXTRACT(year from date) = EXTRACT(year from CURRENT_DATE) AND
+				category NOT IN ('Credit Card Payment', 'Debt Payment') AND
 				amount < 0 AND
 				user_id = ${userId}
 			GROUP BY clean_name
@@ -319,6 +322,7 @@ export const getMonthlyTrends = async (
 			FROM transactions 
 			WHERE
 				(date >= DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '6 month') AND
+				category NOT IN ('Credit Card Payment', 'Debt Payment') AND
 				(user_id = ${userId})
 			GROUP BY month
 			ORDER BY month ASC;
