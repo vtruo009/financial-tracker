@@ -19,7 +19,10 @@ const config = {
 	skipEmptyLines: true,
 };
 
-const parseBOA = (fileContent: string, account: Account) => {
+const parseBOA = (
+	fileContent: string,
+	account: Account,
+): TransactionInput[] => {
 	const transactions: TransactionInput[] = [];
 	const results: Papa.ParseResult<BankOfAmericaCSV> = Papa.parse(
 		fileContent,
@@ -31,8 +34,8 @@ const parseBOA = (fileContent: string, account: Account) => {
 			amount: parseFloat(row.Amount),
 			date: row['Posted Date'],
 			raw_name: row.Payee,
-			clean_name: row.Payee, // TODO: AI Renaming
-			category: CATEGORY.MISC, // TODO: AI auto-categorization
+			clean_name: row.Payee,
+			category: CATEGORY.UNCATEGORIZED,
 			user_id: 1, // TODO: Authentication
 			account_id: account.id,
 			ref_num: row['Reference Number'],
@@ -48,7 +51,10 @@ const parseBOA = (fileContent: string, account: Account) => {
 	return transactions;
 };
 
-const parseChase = (fileContent: string, account: Account) => {
+const parseChase = (
+	fileContent: string,
+	account: Account,
+): TransactionInput[] => {
 	const transactions: TransactionInput[] = [];
 	const results: Papa.ParseResult<ChaseCSV> = Papa.parse(fileContent, {
 		header: true,
@@ -60,7 +66,7 @@ const parseChase = (fileContent: string, account: Account) => {
 			amount: parseFloat(row.Amount),
 			date: row['Transaction Date'],
 			raw_name: row.Description,
-			clean_name: row.Description, // TODO: AI Renaming
+			clean_name: row.Description,
 			category: row.Category as CATEGORY,
 			user_id: 1, // TODO: Authentication
 			account_id: account.id,
@@ -77,7 +83,11 @@ const parseChase = (fileContent: string, account: Account) => {
 	return transactions;
 };
 
-const parseCapitalOne = (fileContent: string, account: Account) => {
+// TODO: Implement Capital One CSV parsing logic
+const parseCapitalOne = (
+	fileContent: string,
+	account: Account,
+): TransactionInput[] => {
 	const transactions: TransactionInput[] = [];
 	return transactions;
 };

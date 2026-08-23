@@ -13,6 +13,8 @@ import {
 	TransactionInput,
 	TransactionPayload,
 } from './mixins';
+import { cleanUpItems } from './ai';
+import { revalidatePath } from 'next/cache';
 
 const DATABASE_URL = process.env.DATABASE_URL || '';
 const sql = neon(DATABASE_URL);
@@ -25,7 +27,8 @@ export async function getData() {
 /******************************** TRANSACTIONS ********************************/
 export const uploadTransactions = async (transactions: TransactionInput[]) => {
 	try {
-		const promises = transactions.map((row) => {
+		const cleanedUpTransactions = await cleanUpItems(transactions);
+		const promises = cleanedUpTransactions.map((row) => {
 			return sql`
 				INSERT INTO transactions (
 					amount,
@@ -52,6 +55,7 @@ export const uploadTransactions = async (transactions: TransactionInput[]) => {
 		});
 
 		await Promise.all(promises);
+		revalidatePath('/');
 	} catch (error) {
 		console.error('[uploadTransaction]', error);
 	}
@@ -159,17 +163,19 @@ export const updateTransaction = async (
 				${notes}
 			) WHERE id = ${transactionId};
 		`;
+		revalidatePath('/');
 	} catch (error) {
 		console.error('[updateTransaction]', error);
 	}
 };
 
-export const deleteTransaction = async (transactionId: string) => {
+export const deleteTransaction = async (transactionId: number) => {
 	try {
 		await sql`
 			DELETE FROM transactions
 			WHERE id = ${transactionId};
 		`;
+		revalidatePath('/');
 	} catch (error) {
 		console.error('[deleteTransaction]', error);
 	}

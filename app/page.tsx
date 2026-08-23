@@ -13,6 +13,7 @@ import SummaryCards from '@/components/SummaryCards';
 import Link from 'next/link';
 import FilterBar from '@/components/FilterBar';
 import SmartPagination from '@/components/SmartPagination';
+import { cleanUpItems } from '@/lib/ai';
 
 const OFFSET = 1;
 

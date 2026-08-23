@@ -1,5 +1,6 @@
 export const DEFAULT_USER_ID = 1;
 export const LIMIT = 10;
+export const CHUNK_LIMIT = 25;
 
 // ******************** INTERFACES ********************
 export interface Transaction {
@@ -74,6 +75,7 @@ export enum CATEGORY {
 	HOUSING = 'Housing', // rent, utils, internet
 	DINING = 'Dining', // food, boba, starbucks
 	GROCERIES = 'Groceries',
+	ENTERTAINMENT = 'Entertainment',
 	TRANSPORTATION = 'Transportation', // gas, charging, fares
 	HEALTH_WELLBEING = 'Health & Wellbeing', // skin care, haircut, target, copays, curology
 	MATERIALIST_DESIRE = 'Materialistic Desire', // hobby, Legos, fishing gears
@@ -81,6 +83,7 @@ export enum CATEGORY {
 	CREDIT_CARD_PAYMENT = 'Credit Card Payment',
 	DEBT_PAYMENT = 'Debt Payment',
 	MISC = 'Miscellaneous',
+	UNCATEGORIZED = 'Uncategorized',
 }
 
 export const EXCLUDED_CATEGORIES = [
@@ -124,4 +127,16 @@ export interface MonthlyTrendPayload extends SpendingsPayload {
 
 export interface TotalTransactionCount {
 	total_transactions: number;
+}
+
+/******************* AI *******************/
+export interface GeminiInput {
+	index: number;
+	raw_name: string;
+	amount: number;
+}
+export interface GeminiPayload {
+	index: number;
+	clean_name: string;
+	category: string;
 }

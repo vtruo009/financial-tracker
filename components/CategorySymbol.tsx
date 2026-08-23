@@ -5,19 +5,12 @@ import {
 	CarFrontIcon,
 	CreditCardIcon,
 	FolderIcon,
-<<<<<<< HEAD
-=======
 	HouseIcon,
->>>>>>> cb63c50 (charts folder structure & new categories)
 	LandmarkIcon,
 	LucideProps,
 	PizzaIcon,
 	ShoppingBagIcon,
 	TreePalmIcon,
-<<<<<<< HEAD
-	WrenchIcon,
-=======
->>>>>>> cb63c50 (charts folder structure & new categories)
 } from 'lucide-react';
 import { JSX } from 'react';
 
@@ -36,10 +29,7 @@ const categoryColors: Record<string, string> = {
 
 const getCategoryIcon = (category: string, otherProps?: LucideProps) => {
 	const icons: Record<string, JSX.Element> = {
-<<<<<<< HEAD
-=======
 		Housing: <HouseIcon {...otherProps} />,
->>>>>>> cb63c50 (charts folder structure & new categories)
 		Dining: <PizzaIcon {...otherProps} />,
 		'Health & Wellbeing': <BicepsFlexedIcon {...otherProps} />,
 		Transportation: <CarFrontIcon {...otherProps} />,

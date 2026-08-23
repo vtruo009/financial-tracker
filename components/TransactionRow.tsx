@@ -19,8 +19,21 @@ import { Textarea } from './ui/textarea';
 import { Label } from './ui/label';
 import CategorySelect from './CategorySelect';
 import { useState } from 'react';
-import { updateTransaction } from '@/lib/actions';
+import { deleteTransaction, updateTransaction } from '@/lib/actions';
 import { currencyFormatter } from '@/lib/utils';
+import { Delete, Trash2Icon } from 'lucide-react';
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogMedia,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from './ui/alert-dialog';
 
 const TransactionRow = ({
 	id,
@@ -35,6 +48,10 @@ const TransactionRow = ({
 
 	const handleSave = async () => {
 		await updateTransaction(id, selectedCategory, currentNotes);
+	};
+
+	const handleDelete = async () => {
+		await deleteTransaction(id);
 	};
 
 	return (
@@ -65,6 +82,7 @@ const TransactionRow = ({
 					</TableCell>
 				</TableRow>
 			</DialogTrigger>
+
 			<DialogContent className='sm:max-w-sm'>
 				<DialogHeader>
 					<DialogTitle className='font-bold'>Transaction Details</DialogTitle>
@@ -72,6 +90,7 @@ const TransactionRow = ({
 						Add a note here. Click save when you&apos;re done.
 					</DialogDescription>
 				</DialogHeader>
+
 				<FieldGroup>
 					<Field orientation='vertical'>
 						<p className='text-left text-lg font-semibold'>{cleanName}</p>
@@ -95,13 +114,45 @@ const TransactionRow = ({
 						/>
 					</Field>
 				</FieldGroup>
-				<DialogFooter>
-					<DialogClose asChild>
-						<Button variant='outline'>Cancel</Button>
-					</DialogClose>
-					<DialogClose asChild>
-						<Button onClick={handleSave}>Save changes</Button>
-					</DialogClose>
+
+				<DialogFooter className='sm:justify-between justify-between'>
+					<AlertDialog>
+						<AlertDialogTrigger asChild>
+							<Button variant='destructive'>
+								<Trash2Icon />
+							</Button>
+						</AlertDialogTrigger>
+						<AlertDialogContent size='sm'>
+							<AlertDialogHeader>
+								<AlertDialogMedia className='bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive'>
+									<Trash2Icon />
+								</AlertDialogMedia>
+								<AlertDialogTitle>Delete transaction?</AlertDialogTitle>
+								<AlertDialogDescription>
+									This will permanently delete this transaction.
+								</AlertDialogDescription>
+							</AlertDialogHeader>
+							<AlertDialogFooter>
+								<AlertDialogCancel variant='outline'>Cancel</AlertDialogCancel>
+								<DialogClose asChild>
+									<AlertDialogAction
+										variant='destructive'
+										onClick={handleDelete}
+									>
+										Delete
+									</AlertDialogAction>
+								</DialogClose>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
+					<div className='flex gap-2'>
+						<DialogClose asChild>
+							<Button variant='outline'>Cancel</Button>
+						</DialogClose>
+						<DialogClose asChild>
+							<Button onClick={handleSave}>Save changes</Button>
+						</DialogClose>
+					</div>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>
